@@ -1,0 +1,70 @@
+@import "tailwindcss";
+@plugin "daisyui";
+@plugin "flowbite/plugin";
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source "../**/*.blade.php";
+@source "../**/*.js";
+@source "../**/*.vue";
+@source "../node_modules/flowbite";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none; /* Untuk browser berbasis WebKit seperti Chrome, Safari */
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none; /* Untuk Internet Explorer dan Edge */
+    scrollbar-width: none; /* Untuk Firefox */
+}
+
+.flatpickr-calendar {
+    @apply shadow-lg rounded-lg border border-gray-200 overflow-hidden mt-[10px] text-white;
+}
+
+.flatpickr-months .flatpickr-month,
+.flatpickr-current-month {
+    @apply bg-[#344357] text-white hover:text-white;
+}
+
+.flatpickr-monthDropdown-months,
+.flatpickr-monthDropdown-months option {
+    @apply text-black;
+}
+
+.flatpickr-prev-month,
+.flatpickr-next-month {
+    @apply hidden;
+}
+
+.flatpickr-weekday {
+    padding: 10px 0 !important;
+    color: white !important;
+    background-color: #344357 !important;
+    font-weight: 500 !important;
+}
+
+.flatpickr-day {
+    @apply rounded-lg;
+}
+
+.flatpickr-day.today {
+    @apply active:bg-[#344357] hover:bg-[#344357];
+}
+.flatpickr-day.selected {
+    @apply border-none outline-none bg-[#344357] text-white active:bg-[#344357] hover:bg-[#344357];
+}
+
+.flatpickr-time {
+    @apply text-sm;
+}
+
+/* Datepicker */
