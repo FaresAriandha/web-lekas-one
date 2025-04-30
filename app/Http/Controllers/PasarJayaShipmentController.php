@@ -11,6 +11,7 @@ use App\Models\ClientBill;
 use Illuminate\Http\Request;
 use App\Models\PasarJayaBill;
 use App\Models\PasarJayaShipment;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
@@ -40,6 +41,11 @@ class PasarJayaShipmentController extends Controller
             'location.price:spl_ID,spl_name'
         ]);
 
+        if (Auth::user()->user_role === 'kurir') {
+            $courier_ID = Auth::user()->courier->courier_ID;
+            $query->where('courier_ID', $courier_ID);
+        }
+
 
         // jika ada request tanggal
         if (!empty($selectedDate)) {
@@ -65,13 +71,24 @@ class PasarJayaShipmentController extends Controller
 
         // Filter keyword jika ada
         if (!empty($keyword)) {
-            $query->where(function ($q) use ($keyword) {
-                $q->whereHas('courier', function ($qc) use ($keyword) {
-                    $qc->where('courier_name', 'like', "%{$keyword}%");
-                })->orWhereHas('location', function ($qf) use ($keyword) {
-                    $qf->where('shploc_name', 'like', "%{$keyword}%");
+            if (Auth::user()->user_role === 'kurir') {
+                # code...
+                $query->where(function ($q) use ($keyword) {
+                    $q->orWhereHas('location', function ($qf) use ($keyword) {
+                        $qf->where('shploc_name', 'like', "%{$keyword}%");
+                    });
                 });
-            });
+            } else {
+                # code...
+                $query->where(function ($q) use ($keyword) {
+                    $q->whereHas('courier', function ($qc) use ($keyword) {
+                        $qc->where('courier_name', 'like', "%{$keyword}%");
+                    })->orWhereHas('location', function ($qf) use ($keyword) {
+                        $qf->where('shploc_name', 'like', "%{$keyword}%");
+                    });
+                });
+            }
+
 
 
             $data['keyword'] = $keyword;

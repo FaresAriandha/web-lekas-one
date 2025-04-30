@@ -21,9 +21,9 @@
     {{-- Menus --}}
     <div class="w-full h-full pb-[120px] overflow-y-auto no-scrollbar ">
         <div class="w-full h-fit my-[20px] px-4">
-            <a class="{{ Auth::user()->user_role === 'admin' ? '' : 'hidden' }} w-full flex justify-start items-center group font-semibold px-4 py-2 rounded-md gap-[10px] {{ request()->is('admin/dashboard*') || request()->is('/') ? 'bg-[#52C3BE] shadow-xl text-[#344357]' : 'hover:bg-[#52C3BE] hover:shadow-xl hover:text-[#344357] text-white' }}"
+            <a class="{{ Auth::user()->user_role === 'admin' ? '' : 'hidden' }} w-full flex justify-start items-center group font-semibold px-4 py-2 rounded-md gap-[10px] {{ request()->is('admin/dashboard*') || request()->is('/') ? 'bg-[#52C3BE] shadow-xl text-[#344357]' : 'hover:bg-[#52C3BE] active:bg-[#52C3BE] hover:shadow-xl hover:text-[#344357] active:text-[#344357] text-white' }}"
                 href="/admin/dashboard">
-                <svg class="w-[20px] h-[20px] {{ request()->is('admin/dashboard*') ? 'text-[#344357]' : 'text-white group-hover:text-[#344357]' }}"
+                <svg class="w-[20px] h-[20px] {{ request()->is('admin/dashboard*') ? 'text-[#344357]' : 'text-white group-hover:text-[#344357] group-active:text-[#344357]' }}"
                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="lucide lucide-layout-dashboard">
@@ -34,9 +34,9 @@
                 </svg>
                 Dashboard
             </a>
-            <a class="{{ Auth::user()->user_role !== 'kurir' ? '' : 'hidden' }} w-full flex justify-start items-center group font-semibold px-4 py-2 rounded-md  gap-[10px] my-[8px] {{ request()->is('admin/couriers*') ? 'bg-[#52C3BE] shadow-xl text-[#344357]' : 'hover:bg-[#52C3BE] hover:shadow-xl hover:text-[#344357] text-white' }}"
+            <a class="{{ Auth::user()->user_role !== 'kurir' ? '' : 'hidden' }} w-full flex justify-start items-center group font-semibold px-4 py-2 rounded-md  gap-[10px] my-[8px] {{ request()->is('admin/couriers*') ? 'bg-[#52C3BE] shadow-xl text-[#344357]' : 'hover:bg-[#52C3BE] active:bg-[#52C3BE] hover:shadow-xl hover:text-[#344357] active:text-[#344357] text-white' }}"
                 href="{{ route('admin.couriers.index') }}">
-                <svg class="w-[20px] h-[20px] {{ request()->is('admin/couriers*') ? 'text-[#344357]' : 'text-white group-hover:text-[#344357]' }}"
+                <svg class="w-[20px] h-[20px] {{ request()->is('admin/couriers*') ? 'text-[#344357]' : 'text-white group-hover:text-[#344357] group-active:text-[#344357]' }}"
                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-round">
                     <path d="M18 21a8 8 0 0 0-16 0" />
@@ -45,9 +45,9 @@
                 </svg>
                 Kelola Kurir
             </a>
-            <a class="{{ Auth::user()->user_role !== 'kurir' ? '' : 'hidden' }} w-full flex justify-start items-center group font-semibold px-4 py-2 rounded-md gap-[10px] my-[8px] {{ request()->is('admin/fleets*') ? 'bg-[#52C3BE] shadow-xl text-[#344357]' : 'hover:bg-[#52C3BE] hover:shadow-xl hover:text-[#344357] text-white' }}"
+            <a class="{{ Auth::user()->user_role !== 'kurir' ? '' : 'hidden' }} w-full flex justify-start items-center group font-semibold px-4 py-2 rounded-md gap-[10px] my-[8px] {{ request()->is('admin/fleets*') ? 'bg-[#52C3BE] shadow-xl text-[#344357]' : 'hover:bg-[#52C3BE] active:bg-[#52C3BE] hover:shadow-xl hover:text-[#344357] active:text-[#344357] text-white' }}"
                 href="{{ route('admin.fleets.index') }}">
-                <svg class="w-[20px] h-[20px] {{ request()->is('admin/fleets*') ? 'text-[#344357]' : 'text-white group-hover:text-[#344357]' }}"
+                <svg class="w-[20px] h-[20px] {{ request()->is('admin/fleets*') ? 'text-[#344357]' : 'text-white group-hover:text-[#344357] group-active:text-[#344357]' }}"
                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-truck">
                     <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" />
@@ -58,9 +58,9 @@
                 </svg>
                 Kelola Armada
             </a>
-            <a class="w-full flex justify-start items-center group font-semibold px-4 py-2 rounded-md  gap-[10px] my-[8px] {{ request()->is('admin/locations*') ? 'bg-[#52C3BE] shadow-xl text-[#344357]' : 'hover:bg-[#52C3BE] hover:shadow-xl hover:text-[#344357] text-white' }}"
+            <a class="w-full flex justify-start items-center group font-semibold px-4 py-2 rounded-md  gap-[10px] my-[8px] {{ request()->is('admin/locations*') ? 'bg-[#52C3BE] shadow-xl text-[#344357]' : 'hover:bg-[#52C3BE] active:bg-[#52C3BE] hover:shadow-xl hover:text-[#344357] active:text-[#344357] text-white' }}"
                 href="{{ route('admin.locations.index') }}">
-                <svg class="w-[20px] h-[20px] {{ request()->is('admin/locations*') ? 'text-[#344357]' : 'text-white group-hover:text-[#344357]' }}"
+                <svg class="w-[20px] h-[20px] {{ request()->is('admin/locations*') ? 'text-[#344357]' : 'text-white group-hover:text-[#344357] group-active:text-[#344357]' }}"
                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-locate-fixed">
                     <line x1="2" x2="5" y1="12" y2="12" />
@@ -72,9 +72,9 @@
                 </svg>
                 Kelola Lokasi
             </a>
-            <a class="{{ Auth::user()->user_role === 'admin' ? '' : 'hidden' }} w-full flex justify-start items-center group font-semibold px-4 py-2 rounded-md  gap-[10px] my-[8px] {{ request()->is('admin/prices*') ? 'bg-[#52C3BE] shadow-xl text-[#344357]' : 'hover:bg-[#52C3BE] hover:shadow-xl hover:text-[#344357] text-white' }}"
+            <a class="{{ Auth::user()->user_role === 'admin' ? '' : 'hidden' }} w-full flex justify-start items-center group font-semibold px-4 py-2 rounded-md  gap-[10px] my-[8px] {{ request()->is('admin/prices*') ? 'bg-[#52C3BE] shadow-xl text-[#344357]' : 'hover:bg-[#52C3BE] active:bg-[#52C3BE] hover:shadow-xl hover:text-[#344357] active:text-[#344357] text-white' }}"
                 href="{{ route('admin.prices.index') }}">
-                <svg class="w-[20px] h-[20px] {{ request()->is('admin/prices*') ? 'text-[#344357]' : 'text-white group-hover:text-[#344357]' }}"
+                <svg class="w-[20px] h-[20px] {{ request()->is('admin/prices*') ? 'text-[#344357]' : 'text-white group-hover:text-[#344357] group-active:text-[#344357]' }}"
                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag">
                     <path
@@ -83,9 +83,9 @@
                 </svg>
                 Kelola Tarif
             </a>
-            <a class="{{ Auth::user()->user_role === 'admin' ? '' : 'hidden' }} w-full flex justify-start items-center group font-semibold px-4 py-2 rounded-md  gap-[10px] my-[8px] {{ request()->is('admin/users*') ? 'bg-[#52C3BE] shadow-xl text-[#344357]' : 'hover:bg-[#52C3BE] hover:shadow-xl hover:text-[#344357] text-white' }}"
+            <a class="{{ Auth::user()->user_role === 'admin' ? '' : 'hidden' }} w-full flex justify-start items-center group font-semibold px-4 py-2 rounded-md  gap-[10px] my-[8px] {{ request()->is('admin/users*') ? 'bg-[#52C3BE] shadow-xl text-[#344357]' : 'hover:bg-[#52C3BE] active:bg-[#52C3BE] hover:shadow-xl hover:text-[#344357] active:text-[#344357] text-white' }}"
                 href="{{ route('admin.users.index') }}">
-                <svg class="w-[20px] h-[20px] {{ request()->is('admin/users*') ? 'text-[#344357]' : 'text-white group-hover:text-[#344357]' }}"
+                <svg class="w-[20px] h-[20px] {{ request()->is('admin/users*') ? 'text-[#344357]' : 'text-white group-hover:text-[#344357] group-active:text-[#344357]' }}"
                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="lucide lucide-user-round">
@@ -94,9 +94,9 @@
                 </svg>
                 Kelola Pengguna
             </a>
-            <a class="w-full flex justify-start items-center group font-semibold px-4 py-2 rounded-md  gap-[10px] my-[8px] {{ request()->is('admin/assignees*') ? 'bg-[#52C3BE] shadow-xl text-[#344357]' : 'hover:bg-[#52C3BE] hover:shadow-xl hover:text-[#344357] text-white' }}"
+            <a class="w-full flex justify-start items-center group font-semibold px-4 py-2 rounded-md  gap-[10px] my-[8px] {{ request()->is('admin/assignees*') ? 'bg-[#52C3BE] shadow-xl text-[#344357]' : 'hover:bg-[#52C3BE] active:bg-[#52C3BE] hover:shadow-xl hover:text-[#344357] active:text-[#344357] text-white' }}"
                 href="{{ route('admin.assignees.index') }}">
-                <svg class="w-[20px] h-[20px] {{ request()->is('admin/assignees*') ? 'text-[#344357]' : 'text-white group-hover:text-[#344357]' }}"
+                <svg class="w-[20px] h-[20px] {{ request()->is('admin/assignees*') ? 'text-[#344357]' : 'text-white group-hover:text-[#344357] group-active:text-[#344357]' }}"
                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="lucide lucide-clipboard-list">
@@ -114,9 +114,9 @@
         <div class="w-full h-fit my-[20px] px-4">
             <h1>Riwayat Pengiriman</h1>
             <div class="my-[20px]">
-                <a class="w-full flex justify-start items-center group font-semibold px-4 py-2 rounded-md  gap-[10px] {{ request()->is('admin/paxel-shippings*') ? 'bg-[#52C3BE] shadow-xl text-[#344357]' : 'hover:bg-[#52C3BE] hover:shadow-xl hover:text-[#344357] text-white' }}"
+                <a class="w-full flex justify-start items-center group font-semibold px-4 py-2 rounded-md  gap-[10px] {{ request()->is('admin/paxel-shippings*') ? 'bg-[#52C3BE] shadow-xl text-[#344357]' : 'hover:bg-[#52C3BE] active:bg-[#52C3BE] hover:shadow-xl hover:text-[#344357] active:text-[#344357] text-white' }}"
                     href="{{ route('admin.paxel-shippings.index') }}">
-                    <svg class="w-[20px] h-[20px] {{ request()->is('admin/paxel-shippings*') ? 'text-[#344357]' : 'text-white group-hover:text-[#344357]' }}"
+                    <svg class="w-[20px] h-[20px] {{ request()->is('admin/paxel-shippings*') ? 'text-[#344357]' : 'text-white group-hover:text-[#344357] group-active:text-[#344357]' }}"
                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                         class="lucide lucide-package">
@@ -128,9 +128,9 @@
                     </svg>
                     Proyek Paxel
                 </a>
-                <a class="w-full flex justify-start items-center group font-semibold px-4 py-2 rounded-md  gap-[10px] my-[8px] {{ request()->is('admin/pasjay-shippings*') ? 'bg-[#52C3BE] shadow-xl text-[#344357]' : 'hover:bg-[#52C3BE] hover:shadow-xl hover:text-[#344357] text-white' }}"
+                <a class="w-full flex justify-start items-center group font-semibold px-4 py-2 rounded-md  gap-[10px] my-[8px] {{ request()->is('admin/pasjay-shippings*') ? 'bg-[#52C3BE] shadow-xl text-[#344357]' : 'hover:bg-[#52C3BE] active:bg-[#52C3BE] hover:shadow-xl hover:text-[#344357] active:text-[#344357] text-white' }}"
                     href="{{ route('admin.pasjay-shippings.index') }}">
-                    <svg class="w-[20px] h-[20px] {{ request()->is('admin/pasjay-shippings*') ? 'text-[#344357]' : 'text-white group-hover:text-[#344357]' }}"
+                    <svg class="w-[20px] h-[20px] {{ request()->is('admin/pasjay-shippings*') ? 'text-[#344357]' : 'text-white group-hover:text-[#344357] group-active:text-[#344357]' }}"
                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-store">
                         <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7" />
@@ -148,9 +148,9 @@
         <div class="w-full h-fit my-[20px] px-4 {{ Auth::user()->user_role === 'admin' ? '' : 'hidden' }}">
             <h1>Transaksi</h1>
             <div class="my-[20px]">
-                <a class="{{ Auth::user()->user_role === 'admin' ? '' : 'hidden' }} w-full flex justify-start items-center group font-semibold px-4 py-2 rounded-md  gap-[10px] {{ request()->is('admin/courier-payments*') ? 'bg-[#52C3BE] shadow-xl text-[#344357]' : 'hover:bg-[#52C3BE] hover:shadow-xl hover:text-[#344357] text-white' }}"
+                <a class="{{ Auth::user()->user_role === 'admin' ? '' : 'hidden' }} w-full flex justify-start items-center group font-semibold px-4 py-2 rounded-md  gap-[10px] {{ request()->is('admin/courier-payments*') ? 'bg-[#52C3BE] shadow-xl text-[#344357]' : 'hover:bg-[#52C3BE] active:bg-[#52C3BE] hover:shadow-xl hover:text-[#344357] active:text-[#344357] text-white' }}"
                     href="/admin/courier-payments">
-                    <svg class="w-[20px] h-[20px] {{ request()->is('admin/courier-payments*') ? 'text-[#344357]' : 'text-white group-hover:text-[#344357]' }}"
+                    <svg class="w-[20px] h-[20px] {{ request()->is('admin/courier-payments*') ? 'text-[#344357]' : 'text-white group-hover:text-[#344357] group-active:text-[#344357]' }}"
                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round" class="lucide lucide-wallet">
@@ -160,9 +160,9 @@
                     </svg>
                     Pencairan Kurir
                 </a>
-                <a class="{{ Auth::user()->user_role === 'admin' ? '' : 'hidden' }} w-full flex justify-start items-center group font-semibold px-4 py-2 rounded-md  gap-[10px] my-[8px] {{ request()->is('admin/client-bills*') ? 'bg-[#52C3BE] shadow-xl text-[#344357]' : 'hover:bg-[#52C3BE] hover:shadow-xl hover:text-[#344357] text-white' }}"
+                <a class="{{ Auth::user()->user_role === 'admin' ? '' : 'hidden' }} w-full flex justify-start items-center group font-semibold px-4 py-2 rounded-md  gap-[10px] my-[8px] {{ request()->is('admin/client-bills*') ? 'bg-[#52C3BE] shadow-xl text-[#344357]' : 'hover:bg-[#52C3BE] active:bg-[#52C3BE] hover:shadow-xl hover:text-[#344357] active:text-[#344357] text-white' }}"
                     href="/admin/client-bills">
-                    <svg class="w-[20px] h-[20px] {{ request()->is('admin/client-bills*') ? 'text-[#344357]' : 'text-white group-hover:text-[#344357]' }}"
+                    <svg class="w-[20px] h-[20px] {{ request()->is('admin/client-bills*') ? 'text-[#344357]' : 'text-white group-hover:text-[#344357] group-active:text-[#344357]' }}"
                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                         class="lucide lucide-banknote">
@@ -176,24 +176,28 @@
         </div>
     </div>
 
-    <div class="w-full h-[60px] flex justify-between items-center bg-[#2b3848] absolute bottom-0 text-white gap-[10px] px-[20px]"
+    <div class="w-full h-[60px] flex justify-between items-center bg-[#2b3848] absolute bottom-0 text-white"
         id="profile">
-        <div class="w-fit h-[60px] flex items-center">
-            <div class="w-[35px] h-[35px] rounded-full bg-red-200 overflow-hidden">
+
+        <a class="w-[70%] h-fit px-2 py-2 flex items-center  rounded-lg hover:bg-[#40536b] cursor-pointer active:bg-[#40536b] ms-3"
+            href="{{ route('admin.users.edit', Auth::user()->user_ID) }}">
+            <div class="w-[35px] h-[35px] rounded-full  overflow-hidden">
                 <img class="w-full h-full object-cover" src="{{ asset('storage/' . Auth::user()->user_img) }}">
             </div>
             <span class="ml-[10px] max-w-[120px] truncate block">{{ Auth::user()->user_name }}</span>
-        </div>
-        <a class="w-[30px] h-[30px] bg-white flex justify-center items-center rounded-md cursor-pointer"
-            href="{{ route('admin.logout') }}">
-            <svg class="w-[20px] h-[20px] text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" class="lucide lucide-log-out">
-                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                <polyline points="16 17 21 12 16 7" />
-                <line x1="21" x2="9" y1="12" y2="12" />
-            </svg>
         </a>
+        <div class="w-[20%] flex justify-center items-center">
+            <a class="w-[30px] h-[30px] bg-white/80 hover:bg-white active:bg-white flex justify-center items-center rounded-md cursor-pointer me-5"
+                href="{{ route('admin.logout') }}">
+                <svg class="w-[20px] h-[20px] text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" class="lucide lucide-log-out">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                    <polyline points="16 17 21 12 16 7" />
+                    <line x1="21" x2="9" y1="12" y2="12" />
+                </svg>
+            </a>
+        </div>
     </div>
 
 

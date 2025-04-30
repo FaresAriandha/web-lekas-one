@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (inputs) {
         inputs.forEach((input) => {
-            console.log(input);
+            // console.log(input);
             input.addEventListener("input", updateCharacterCount);
             // Hitung pertama kali saat load
             updateCharacterCount({ target: input });

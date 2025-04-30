@@ -103,13 +103,19 @@
 
     {{-- Dashboard Pengiriman --}}
     @if ($title == 'Dashboard Pengiriman')
+
         <div>
+            <div class="mb-5">
+                <h2 class="text-xl font-semibold">Ringkasan Informasi Proyek
+                    {{ $proyek === 'paxel' ? 'Paxel' : 'Pasar Jaya' }}
+                </h2>
+            </div>
             <div
                 class="w-full flex flex-col sm:flex-row justify-start space-x-[20px] space-y-[20px] sm:space-y-0 mb-[20px]">
                 <div
                     class="w-[100%] sm:w-[250px] p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 text-center">
                     <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 ">
-                        {{ $proyek == 'pasjay' && $title == 'Dashboard Pengiriman' ? 'Total Lokasi Kirim' : 'Total AWB' }}
+                        {{ $proyek == 'pasjay' && $title == 'Dashboard Pengiriman' ? 'Total Lokasi Pengiriman' : 'Total AWB' }}
                     </h5>
                     <p class="text-gray-700 font-semibold mt-[16px]">
                         {{ $proyek == 'pasjay' ? number_format($total_location, 0, '.', ',') : number_format($total_awb, 0, '.', ',') }}
@@ -163,7 +169,9 @@
         </div>
     @else
         <div class="bg-white shadow rounded-2xl p-6 relative" id="container-table">
-
+            <h2 class="text-xl font-semibold">Daftar Peringkat Kinerja Kurir
+            </h2>
+            <p class="mb-5 italic">Berdasarkan setoran atas proyek paxel dan pasar jaya</p>
             <div class="relative overflow-x-scroll no-scrollbar shadow-md rounded-lg">
                 <table class="w-full h-fit text-sm text-left rtl:text-right text-gray-500">
                     <thead class="text-[16px] capitalize bg-[#344357] text-white text-center">

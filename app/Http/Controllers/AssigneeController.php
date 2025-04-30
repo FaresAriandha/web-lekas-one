@@ -7,6 +7,7 @@ use App\Models\Fleet;
 use App\Models\Courier;
 use App\Models\Assignee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class AssigneeController extends Controller
@@ -30,6 +31,12 @@ class AssigneeController extends Controller
         ]);
 
 
+        if (Auth::user()->user_role === 'kurir') {
+            $courier_ID = Auth::user()->courier->courier_ID;
+            $query->where('courier_ID', $courier_ID);
+        }
+
+
         // jika ada request tanggal
         if (!empty($selectedDate)) {
             $query->whereDate('cas_pickup_time', $selectedDate);
@@ -44,13 +51,21 @@ class AssigneeController extends Controller
 
         // Filter keyword jika ada
         if (!empty($keyword)) {
-            $query->where(function ($q) use ($keyword) {
-                $q->whereHas('courier', function ($qc) use ($keyword) {
-                    $qc->where('courier_name', 'like', "%{$keyword}%");
-                })->orWhereHas('courier.fleet', function ($qf) use ($keyword) {
-                    $qf->where('fleet_nopol', 'like', "%{$keyword}%");
-                })->orWhere('cas_type', 'like', "%{$keyword}%");
-            });
+            if (Auth::user()->user_role === 'kurir') {
+                $query->where(function ($q) use ($keyword) {
+                    $q->whereHas('courier.fleet', function ($qc) use ($keyword) {
+                        $qc->where('fleet_nopol', 'like', "%{$keyword}%");
+                    })->orWhere('cas_type', 'like', "%{$keyword}%");
+                });
+            } else {
+                $query->where(function ($q) use ($keyword) {
+                    $q->whereHas('courier', function ($qc) use ($keyword) {
+                        $qc->where('courier_name', 'like', "%{$keyword}%");
+                    })->orWhereHas('courier.fleet', function ($qf) use ($keyword) {
+                        $qf->where('fleet_nopol', 'like', "%{$keyword}%");
+                    })->orWhere('cas_type', 'like', "%{$keyword}%");
+                });
+            }
 
             $data['keyword'] = $keyword;
             // dd($data);

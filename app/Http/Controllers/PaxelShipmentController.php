@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ClientBill;
 use Carbon\Carbon;
 use App\Models\Fleet;
 use App\Models\Price;
 use App\Models\Courier;
 use App\Models\PaxelBill;
+use App\Models\ClientBill;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\PaxelShipment;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -40,6 +41,11 @@ class PaxelShipmentController extends Controller
             // 'courier.fleet:fleet_nopol,courier_ID'
         ]);
 
+        if (Auth::user()->user_role === 'kurir') {
+            $courier_ID = Auth::user()->courier->courier_ID;
+            $query->where('courier_ID', $courier_ID);
+        }
+
 
         // jika ada request tanggal
         if (!empty($selectedDate)) {
@@ -61,11 +67,16 @@ class PaxelShipmentController extends Controller
 
         // Filter keyword jika ada
         if (!empty($keyword)) {
-            $query->where(function ($q) use ($keyword) {
-                $q->whereHas('courier', function ($qc) use ($keyword) {
-                    $qc->where('courier_name', 'like', "%{$keyword}%");
-                });
-            })->orWhere('awb_number', 'like', "%{$keyword}%")->orWhere('awb_hub', 'like', "%{$keyword}%");
+            if (Auth::user()->user_role === 'kurir') {
+                $query->where('awb_number', 'like', "%{$keyword}%")->orWhere('awb_hub', 'like', "%{$keyword}%");
+            } else {
+                $query->where(function ($q) use ($keyword) {
+                    $q->whereHas('courier', function ($qc) use ($keyword) {
+                        $qc->where('courier_name', 'like', "%{$keyword}%");
+                    });
+                })->orWhere('awb_number', 'like', "%{$keyword}%")->orWhere('awb_hub', 'like', "%{$keyword}%");
+            }
+
 
             $data['keyword'] = $keyword;
             // dd($data);

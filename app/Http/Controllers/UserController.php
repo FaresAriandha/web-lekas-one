@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Fleet;
 use App\Models\Courier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -159,6 +160,17 @@ class UserController extends Controller
             $user->update($validatedData);
             // User::create($validatedData);
 
+            if ($user->user_role !== 'admin') {
+                switch ($user->user_role) {
+                    case 'korlap':
+                        return redirect()->route('admin.couriers.index');
+                    case 'kurir':
+                        return redirect()->route('admin.locations.index');
+                    default:
+                        Auth::logout();
+                        abort(403, 'Unauthorized role.');
+                }
+            }
             Session::flash('success', 'Data pengguna berhasil diperbarui!');
             return redirect()->route('admin.users.index');
         } catch (\Throwable $th) {

@@ -102,7 +102,7 @@
                             <i>Username</i>
                         </th>
                         <th scope="col" class="px-6 py-3 text-center">
-                            <i>Role</i>
+                            Peran
                         </th>
                         <th scope="col" class="px-6 py-3  text-center">
                             Aksi
@@ -122,17 +122,17 @@
                                 <td class="px-6 py-4 text-center">
                                     {{ $user->username }}
                                 </td>
-                                <td class="px-6 py-4 text-center">
+                                <td class="px-6 py-4 text-center text-white font-semibold">
                                     @if ($user->user_role == 'admin')
-                                        <span class="inline-block px-3 py-2 bg-blue-400 text-white rounded-md">
+                                        <span class="inline-block px-3 py-2 bg-blue-400 rounded-md">
                                             Admin
                                         </span>
                                     @elseif ($user->user_role == 'korlap')
-                                        <span class="inline-block px-3 py-2 bg-orange-400 text-white rounded-md">
+                                        <span class="inline-block px-3 py-2 bg-orange-400 rounded-md">
                                             Korlap
                                         </span>
                                     @else
-                                        <span class="inline-block px-3 py-2 bg-[#52C3BE] text-white rounded-md">
+                                        <span class="inline-block px-3 py-2 bg-[#47aca7] rounded-md">
                                             Kurir
                                         </span>
                                     @endif

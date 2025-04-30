@@ -105,6 +105,11 @@ Route::prefix('admin')->name("admin.")->group(function () {
     Route::get('/pasjay-shippings/{pasarJayaShipment}/edit', [PasarJayaShipmentController::class, 'edit'])->name('pasjay-shippings.edit');
     Route::put('/pasjay-shippings/{pasarJayaShipment}', [PasarJayaShipmentController::class, 'update'])->name('pasjay-shippings.update');
 
+
+    // Edit Kata Sandi
+    Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+
     // Route Logout
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
   });

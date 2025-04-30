@@ -57,8 +57,8 @@
                     <div
                         class="dropdown-input relative w-full ring-1 ring-black overflow-hidden rounded-lg focus-within:ring-2 focus-within:ring-[#344357]">
                         <select
-                            class="appearance-none w-full bg-white border-0 px-4 py-2 focus:ring-2 outline-none focus:ring-[#344357] overflow-hidden text-ellipsis pr-8 box-border"
-                            name="user_role">
+                            class="appearance-none w-full bg-white border-0 px-4 py-2 focus:ring-2 outline-none focus:ring-[#344357] overflow-hidden text-ellipsis pr-8 box-border {{ Auth::user()->user_role != 'admin' ? 'cursor-not-allowed' : '' }}"
+                            name="user_role" {{ Auth::user()->user_role != 'admin' ? 'disabled' : '' }}>
                             <option value="" selected disabled>Pilih Peran</option>
                             </option>
                             <option value="admin" {{ old('user_role', $user->user_role) == 'admin' ? 'selected' : '' }}>
@@ -145,7 +145,7 @@
                 </div>
 
 
-                <div class="{{ $user->user_role == 'kurir' ? 'w-[48.5%]' : 'w-full' }}">
+                <div class="{{ $user->user_role == 'kurir' ? 'w-full sm:w-[48.5%]' : 'w-full' }}">
                     <label for="password" class="block mb-2 w-fit text-sm font-medium text-[#344357] ">Kata Sandi Baru
                         Pengguna</label>
                     <div class="relative">

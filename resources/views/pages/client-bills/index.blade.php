@@ -120,7 +120,7 @@
                             Total Dibayarkan
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Selisih Penagihan
+                            Selisih Tagihan
                         </th>
                         <th scope="col" class="px-6 py-3  text-center">
                             Aksi
