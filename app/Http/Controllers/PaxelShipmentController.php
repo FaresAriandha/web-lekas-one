@@ -132,19 +132,20 @@ class PaxelShipmentController extends Controller
         try {
             // Input File
             if ($request->get("mode_insert") == "multiple") {
-                static::multipleInsert($request, $validatedData);
+                $totalAWB = static::multipleInsert($request, $validatedData);
                 static::insertToPaxelBill($validatedData, $baseprice_paxel->spl_baseprice_client);
                 static::insertOrUpdateClientBill($validatedData);
+                Session::flash('success', "$totalAWB data AWB berhasil ditambahkan!");
+                return redirect()->route('admin.paxel-shippings.index');
             } else if ($request->get("mode_insert") == "single") {
                 PaxelShipment::create($validatedData);
                 static::insertToPaxelBill($validatedData, $baseprice_paxel->spl_baseprice_client);
                 static::insertOrUpdateClientBill($validatedData);
+                Session::flash('success', 'Data AWB berhasil ditambahkan!');
+                return redirect()->route('admin.paxel-shippings.index');
             } else {
                 return redirect()->route('admin.paxel-shippings.index');
             }
-
-            Session::flash('success', 'Data AWB berhasil ditambahkan!');
-            return redirect()->route('admin.paxel-shippings.index');
         } catch (\Throwable $th) {
             // Simpan pesan error ke session
             Session::flash('error', 'Gagal menyimpan data AWB');
@@ -448,9 +449,10 @@ class PaxelShipmentController extends Controller
             $data['updated_at'] = $now;
         }
         unset($data);
-        // dd($insert_data);
+        // dd(count($insert_data));
         // Masukkan data
         PaxelShipment::insert($insert_data);
+        return count($insert_data);
     }
 
     static private function insertToPaxelBill($awb_paxels = [], $baseprice_paxel)

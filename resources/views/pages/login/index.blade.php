@@ -31,7 +31,7 @@
                             class="block mb-2 w-fit text-sm font-medium text-[#344357] ">Username</label>
                         <div class="flex">
                             <span
-                                class="inline-flex items-center px-3 text-sm  bg-gray-200 border border-e-0 border-gray-300 rounded-s-md ">
+                                class="inline-flex items-center px-3 text-sm  bg-gray-200 border border-e-0 border-gray-300 rounded-s-md outline-none">
                                 <svg class="w-[18px] h-[18px] text-[#344357]" xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-round">
@@ -40,7 +40,7 @@
                                 </svg>
                             </span>
                             <input type="text" id="username"
-                                class="rounded-none rounded-e-lg bg-gray-50 border border-gray-300 text-[#344357] focus:ring-1 focus:outline-none focus:ring-[#344357] block flex-1 min-w-0 w-full text-sm p-2.5 "
+                                class="rounded-none rounded-e-lg bg-gray-50 border border-gray-300 text-[#344357] focus:ring-[#344357] block flex-1 min-w-0 w-full text-sm p-2.5 "
                                 placeholder="Username Anda" autocomplete="off" name="username"
                                 value="{{ old('username') }}">
                         </div>
@@ -67,7 +67,7 @@
 
                             <!-- Input Password -->
                             <input type="password" id="password"
-                                class="rounded-none rounded-e-lg bg-gray-50 border border-gray-300 text-[#344357] focus:ring-1 focus:outline-none focus:ring-[#344357] block flex-1 min-w-0 w-full text-sm p-2.5 pr-10"
+                                class="rounded-none rounded-e-lg bg-gray-50 border border-gray-300 text-[#344357]  focus:ring-[#344357] block flex-1 min-w-0 w-full text-sm p-2.5 pr-10"
                                 placeholder="Password Anda" autocomplete="off" name="password">
 
                             <!-- Icon Mata (Kanan) -->
@@ -110,11 +110,13 @@
             class="w-screen h-full flex fixed top-0 right-0 left-0 bg-black/50 justify-center items-center z-30 duration-300">
             <div class="bg-white p-6 rounded-lg shadow-lg w-[90%] sm:w-full max-w-md relative">
                 <div class="text-center">
-                    <svg class="mx-auto mb-4 w-12 h-12 text-red-500" xmlns="http://www.w3.org/2000/svg"
-                        fill="none" viewBox="0 0 20 20">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                    </svg>
+                    <div class="mx-auto w-fit h-fit p-3 bg-red-100 rounded-full overflow-hidden mb-2">
+                        <svg class="w-[60px] h-[60px] text-red-500 " xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                    </div>
                     <h3 class="text-lg font-semibold text-[#344357]">Kesalahan</h3>
                     <p class="text-[#344357] mt-2">{{ session('warning', 'Peringatan') }}</p>
 
@@ -135,9 +137,11 @@
             class="w-screen h-full flex fixed top-0 right-0 left-0 bg-black/50 justify-center items-center z-30 duration-300">
             <div class="bg-white p-6 rounded-lg shadow-lg w-[90%] sm:w-full max-w-md relative">
                 <div class="text-center">
-                    <div class="mx-auto w-fit h-fit bg-green-200">
-                        <svg class=" mb-4 w-12 h-12 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <div class="mx-auto w-fit h-fit p-3 bg-green-100 rounded-full overflow-hidden mb-2">
+                        {{-- <img src="/img/success.gif" alt="" class="w-[100px] h-[100px]"> --}}
+                        <svg class="w-[60px] h-[60px] text-green-600 bg-green-300 rounded-full"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                         </svg>
                     </div>

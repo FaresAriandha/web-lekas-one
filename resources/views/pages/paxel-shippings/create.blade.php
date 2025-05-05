@@ -49,7 +49,12 @@
                 class="w-full flex flex-col sm:flex-row justify-between items-start space-y-8 sm:space-x-[40px] sm:space-y-0">
                 <div class="w-full box-border {{ $mode_insert == 'single' ? 'hidden' : '' }}">
                     <label class="block w-fit mb-2 text-sm font-medium text-[#344357] dark:text-white" for="awb_excel">File
-                        AWB (excel/csv)</label>
+                        AWB <span class="sm:text-[13px] font-normal block sm:inline ">(format file
+                            dapat diunduh <a href="/docs/format_multiple_insert_awb.xlsx"
+                                class="text-blue-500 underline sm:no-underline sm:hover:underline"
+                                download="format_multiple_insert_awb.xlsx">disini</a>
+                            dengan ekstensi
+                            excel)</span></label>
                     <div class="relative ring-1 ring-[#344357] rounded-lg focus:ring-2 overflow-hidden">
                         <input
                             class="border-0  text-[#344357] text-sm  focus:outline-none block w-full px-2 box-border upload-excel"

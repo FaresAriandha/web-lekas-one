@@ -152,6 +152,14 @@ class DashboardController extends Controller
             "header_title" => "Dashboard",
         ];
 
+        $data["startDate"] =  $request->input('start_date') ?? Carbon::now()->startOfMonth();
+        $data["endDate"] = $request->input('end_date') ?? Carbon::now()->endOfMonth();
+
+        if (strtotime($data["endDate"]) < strtotime($data["startDate"])) {
+            Session::flash('warning',  "Tanggal akhir tidak boleh lebih kecil dari tanggal awal");
+            return redirect()->route('admin.shippings.index.courier');
+        }
+
 
         // Query dari tabel paxel_bills
         $paxelData = DB::table('paxel_bills')
@@ -161,6 +169,10 @@ class DashboardController extends Controller
                 DB::raw('SUM(CAST(total_bill_client AS SIGNED) - CAST(paid_to_courier AS SIGNED)) as total_setoran_paxel')
             )
             ->whereNull("deleted_at")
+            ->whereBetween('created_at', [
+                Carbon::parse($data["startDate"])->startOfDay(),
+                Carbon::parse($data["endDate"])->endOfDay()
+            ])
             ->groupBy('courier_ID');
 
         // Query dari tabel pasjay_bills
@@ -171,6 +183,10 @@ class DashboardController extends Controller
                 DB::raw('SUM(CAST(total_charge AS SIGNED) - CAST(paid_to_courier AS SIGNED)) as total_setoran_pasjay')
             )
             ->whereNull("deleted_at")
+            ->whereBetween('created_at', [
+                Carbon::parse($data["startDate"])->startOfDay(),
+                Carbon::parse($data["endDate"])->endOfDay()
+            ])
             ->groupBy('courier_ID');
 
         // Gabungkan hasilnya

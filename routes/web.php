@@ -32,7 +32,7 @@ Route::prefix('admin')->name("admin.")->group(function () {
       // Akses hanya admin
       Route::get("/dashboard", [DashboardController::class, 'index_shipping'])->name("shippings.index")->middleware('role:admin');
       Route::get("/dashboard/shippings", [DashboardController::class, 'index_shipping'])->name("shippings.index")->middleware('role:admin');
-      Route::get("/dashboard/couriers", [DashboardController::class, 'index_courier'])->middleware('role:admin');
+      Route::get("/dashboard/couriers", [DashboardController::class, 'index_courier'])->name('shippings.index.courier')->middleware('role:admin');
       Route::resource("/prices", PriceController::class)->middleware('role:admin');
       Route::resource("/users", UserController::class)->middleware('role:admin');
       Route::get("/courier-payments", [CourierPaymentController::class, 'index'])->name("courier-payments.index")->middleware('role:admin');

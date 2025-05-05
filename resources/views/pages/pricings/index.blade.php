@@ -229,11 +229,13 @@
         class="w-screen h-full hidden fixed top-0 right-0 left-0 bg-black/50 justify-center items-center z-30 duration-300">
         <div class="bg-white p-6 rounded-lg shadow-lg w-[90%] sm:w-full max-w-md relative">
             <div class="text-center">
-                <svg class="mx-auto mb-4 w-12 h-12 text-[#344357]" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 20 20">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                </svg>
+                <div class="mx-auto w-fit h-fit p-3 bg-red-100 rounded-full overflow-hidden mb-2">
+                    <svg class="w-[60px] h-[60px] text-red-500 " xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                </div>
                 <h3 class="text-lg font-semibold text-[#344357]">Konfirmasi Hapus</h3>
                 <p class="text-[#344357] mt-2">Apakah Anda yakin ingin menghapus data ini?</p>
 
