@@ -96,7 +96,7 @@
                         <th scope="col" class="px-6 py-3">
                             Nama Lokasi
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" class="px-6 py-3 text-center">
                             Kota
                         </th>
                         <th scope="col" class="px-6 py-3 text-center">
@@ -117,7 +117,7 @@
                                 <td class="px-6 py-4">
                                     {{ $location->shploc_name }}
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-6 py-4 text-center">
                                     {{ $location->price->spl_name }}
                                 </td>
                                 <td class="px-6 py-4 text-center">

@@ -149,15 +149,25 @@
                 class="w-full flex flex-col sm:flex-row justify-between items-start space-y-8 sm:space-x-[40px] sm:space-y-0 mt-8">
                 <div class="w-full box-border">
                     <label class="block w-fit mb-2 text-sm font-medium text-[#344357] dark:text-white"
-                        for="courier_img">Foto</label>
-                    <img id="img-preview"
+                        for="courier_img">Foto Kurir</label>
+                    {{-- <img id="img-preview"
                         class="ring-1 ring-[#344357] w-[200px] h-[200px] bg-gray-200 my-5 rounded-lg object-cover "
-                        src="{{ asset('storage/' . $courier->courier_img) }}">
+                        src="{{ asset('storage/' . $courier->courier_img) }}"> --}}
+                    <div class="relative ring-1 ring-[#344357] rounded-lg focus:ring-2 overflow-hidden">
+                        <input
+                            class="border-0  text-[#344357] focus:outline-none block w-full px-2 box-border text-base font-semibold"
+                            aria-describedby="courier_img_help" id="courier_img_preview" type="text"
+                            value="{{ basename($courier->courier_img) }}" disabled>
+                        <button type="button"
+                            class="absolute top-0 right-0 bg-yellow-300 text-black px-2 h-full cursor-pointer active:scale-105"
+                            onclick="window.open('{{ asset('storage/' . $courier->courier_img) }}', '_blank')">
+                            Lihat Foto
+                        </button>
+                    </div>
                 </div>
                 <div class="w-full box-border">
                     <label class="block w-fit mb-2 text-sm font-medium text-[#344357] dark:text-white"
-                        for="courier_docs">Dokumen Pribadi<br>(berisi scan KTP, SIM, Akta Lahir, Ijazah, dan SKCK dalam 1
-                        PDF)</label>
+                        for="courier_docs">Dokumen Pribadi Kurir</label>
                     <div class="relative ring-1 ring-[#344357] rounded-lg focus:ring-2 overflow-hidden">
                         <input
                             class="border-0  text-[#344357] focus:outline-none block w-full px-2 box-border text-base font-semibold cursor-not-allowed"

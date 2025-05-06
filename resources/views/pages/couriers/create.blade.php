@@ -270,12 +270,23 @@
                 <div class="w-full box-border">
                     <label class="block w-fit mb-2 text-sm font-medium text-[#344357] dark:text-white"
                         for="courier_img">Foto<br>(dengan ekstensi .jpg/.jpeg/.png)</label>
-                    <img id="img-preview"
-                        class="ring-1 ring-[#344357] w-[200px] h-[200px] bg-gray-200 my-5 rounded-lg object-cover">
-                    <input
+                    {{-- <img id="img-preview"
+                        class="ring-1 ring-[#344357] w-[200px] h-[200px] bg-gray-200 my-5 rounded-lg object-cover"> --}}
+                    <div class="relative ring-1 ring-[#344357] rounded-lg focus:ring-2 overflow-hidden">
+                        <input
+                            class="border-0  text-[#344357] text-sm  focus:outline-none block w-full px-2 box-border upload-pdf"
+                            aria-describedby="courier_img_help" id="courier_img" type="file" name="courier_img"
+                            accept="image/jpg, image/jpeg, image/png">
+                        <button type="button"
+                            class="absolute top-0 right-0 bg-yellow-300 text-black px-2 h-full cursor-pointer hidden active:scale-105"
+                            id="showPDF">
+                            Lihat Foto
+                        </button>
+                    </div>
+                    {{-- <input
                         class="border-0 ring-1 ring-[#344357] text-[#344357] text-sm rounded-lg focus:ring-2 focus:outline-none block w-full px-2 box-border"
                         aria-describedby="courier_img_help" id="courier_img" type="file" name="courier_img"
-                        accept="image/jpg, image/jpeg, image/png">
+                        accept="image/jpg, image/jpeg, image/png"> --}}
                     @error('courier_img')
                         <p class="mt-2 text-sm text-red-500">
                             {{ $message }}

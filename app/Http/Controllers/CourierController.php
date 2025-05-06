@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Courier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -115,6 +116,11 @@ class CourierController extends Controller
 
             // Update data courier ke dalam database
             $courier->update($validatedData);
+            $user = User::where('courier_ID', $courier->courier_ID)->first();
+            $user->update([
+                'user_name' => $courier->courier_name,
+                'user_img' => $courier->courier_img
+            ]);
 
             Session::flash('success', 'Data kurir berhasil diperbarui');
             return redirect()->route('admin.couriers.index');

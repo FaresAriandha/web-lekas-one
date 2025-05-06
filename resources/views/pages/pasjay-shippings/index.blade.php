@@ -156,7 +156,7 @@
                         <th scope="col" class="px-6 py-3 text-center">
                             Roundtrip
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="px-6 py-3">
                             Nama Kurir
                         </th>
                         <th scope="col" class="px-6 py-3  text-center">
