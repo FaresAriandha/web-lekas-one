@@ -44,7 +44,7 @@
                             </option>
                             @foreach ($couriers as $courier)
                                 <option value="{{ $courier->courier_ID }}"
-                                    {{ old('courier_ID') == $courier->courier_ID ? 'selected' : '' }}>
+                                    {{ old('courier_ID') == $courier->courier_ID || Auth::user()->courier_ID == $courier->courier_ID ? 'selected' : '' }}>
                                     {{ $courier->courier_name }}
                                 </option>
                             @endforeach

@@ -30,6 +30,11 @@
             <section class="w-full h-full overflow-y-auto p-6 bg-[#F3F4F6] no-scrollbar">
                 @yield('content')
             </section>
+            <footer class="sticky bottom-0 left-0 w-full flex justify-center items-center bg-[#344357] py-1">
+                <h1 class="font-semibold text-white text-sm">
+                    &copy; Copyright 2025 - PT. Lekas Kargo Sampai
+                </h1>
+            </footer>
         </main>
 
     </div>
@@ -39,8 +44,6 @@
     </div>
 
     @yield('modal-delete')
-
-
 
 
 </body>

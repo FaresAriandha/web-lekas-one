@@ -116,10 +116,19 @@ class PasarJayaShipmentController extends Controller
     {
         $data = ["title" => "Tambah Pengiriman", "header_title" => "Tambah Pengiriman Pasar Jaya", "mode_insert" => "single"];
         // Ambil semua courier yang tidak terhapus dan belum ada di tabel fleets
-        $data["couriers"] = Courier::whereNull('deleted_at') // Pastikan kurir belum di-soft delete
-            ->whereIn('courier_ID', Fleet::whereNotNull('courier_ID')->pluck('courier_ID')->toArray()) // Ambil hanya yang sudah terisi
-            ->select('courier_ID', 'courier_name') // Pilih hanya field yang diperlukan
-            ->get();
+        $query = Courier::select('courier_ID', 'courier_name')
+            ->whereNull('deleted_at') // Pastikan kurir belum di-soft delete
+            ->whereIn('courier_ID', Fleet::whereNotNull('courier_ID')->pluck('courier_ID')->toArray());
+
+        if (Auth::user()->user_role === 'kurir') {
+            $data["couriers"] = $query->where("courier_ID", Auth::user()->courier_ID)->get();
+        } else {
+            $data["couriers"] = $query->get();
+        }
+        // $data["couriers"] = Courier::whereNull('deleted_at') // Pastikan kurir belum di-soft delete
+        // ->whereIn('courier_ID', Fleet::whereNotNull('courier_ID')->pluck('courier_ID')->toArray()) // Ambil hanya yang sudah terisi
+        // ->select('courier_ID', 'courier_name') // Pilih hanya field yang diperlukan
+
 
         $data["locations"] = Location::whereNull('deleted_at') // Pastikan kurir belum di-soft delete
             ->select('shploc_ID', 'shploc_name') // Pilih hanya field yang diperlukan
