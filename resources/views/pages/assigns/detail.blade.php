@@ -3,6 +3,7 @@
     <div class="bg-white shadow rounded-2xl p-6 flex flex-col" id="container-table">
 
         <div class="w-full flex justify-between items-start mb-4 flex-col sm:flex-col">
+
             {{-- Baris 1 --}}
             <div
                 class="w-full flex flex-col sm:flex-row justify-between items-start space-y-8 sm:space-x-[40px] sm:space-y-0">
@@ -53,7 +54,8 @@
                         class="block w-fit mb-2 text-sm font-medium text-[#344357] dark:text-white">Jadwal Muat</label>
                     <input type="text" id="cas_pickup_time" aria-describedby="helper-text-explanation"
                         class="border-0 ring-1 ring-[#344357] text-[#344357] text-sm rounded-lg focus:ring-2 focus:outline-none block w-full p-2.5 font-semibold cursor-not-allowed"
-                        name="cas_pickup_time" value="{{ $assignee->cas_pickup_time->format('d M Y, H:i') }} WIB" disabled>
+                        name="cas_pickup_time" value="{{ $assignee->cas_pickup_time->translatedFormat('d M Y, H:i') }} WIB"
+                        disabled>
                 </div>
                 <div class="w-full">
                     <label for="cas_arrived_time"
@@ -61,13 +63,13 @@
                     <input type="text" id="cas_arrived_time" aria-describedby="helper-text-explanation"
                         class="border-0 ring-1 ring-[#344357] text-[#344357] text-sm rounded-lg focus:ring-2 focus:outline-none block w-full p-2.5 font-semibold cursor-not-allowed"
                         name="cas_arrived_time"
-                        value="{{ $assignee->cas_arrived_time ? $assignee->cas_arrived_time->format('d M Y, H:i') . ' WIB' : '-' }}"
+                        value="{{ $assignee->cas_arrived_time ? $assignee->cas_arrived_time->translatedFormat('d M Y, H:i') . ' WIB' : '-' }}"
                         disabled>
 
                     @if ($assignee->cas_arrived_time > $assignee->cas_pickup_time && $assignee->cas_arrived_time != null)
                         <p class="mt-2 text-sm text-red-600">
                             Terlambat
-                            {{ $assignee->cas_pickup_time->diff($assignee->cas_arrived_time)->format('%h jam %i menit') }}
+                            {{ $assignee->cas_pickup_time->diff($assignee->cas_arrived_time)->format('%d hari %h jam %i menit') }}
                         </p>
                     @endif
                 </div>
@@ -83,13 +85,13 @@
                     <input type="text" id="cas_start_time" aria-describedby="helper-text-explanation"
                         class="border-0 ring-1 ring-[#344357] text-[#344357] text-sm rounded-lg focus:ring-2 focus:outline-none block w-full p-2.5 font-semibold cursor-not-allowed"
                         name="cas_start_time"
-                        value="{{ $assignee->cas_start_time ? $assignee->cas_start_time->format('d M Y, H:i') . ' WIB' : '-' }}"
+                        value="{{ $assignee->cas_start_time ? $assignee->cas_start_time->translatedFormat('d M Y, H:i') . ' WIB' : '-' }}"
                         disabled>
 
                     @if ($assignee->cas_start_time > $assignee->cas_arrived_time && $assignee->cas_start_time != null)
                         <p class="mt-2 text-sm text-red-600">
                             Lebih
-                            {{ $assignee->cas_start_time->diff($assignee->cas_arrived_time)->format('%h jam %i menit %s detik') }}
+                            {{ $assignee->cas_arrived_time->diff($assignee->cas_start_time)->format('%d hari %h jam %i menit') }}
                             dari waktu tiba
                         </p>
                     @endif
@@ -101,13 +103,13 @@
                     <input type="text" id="cas_finish_time" aria-describedby="helper-text-explanation"
                         class="border-0 ring-1 ring-[#344357] text-[#344357] text-sm rounded-lg focus:ring-2 focus:outline-none block w-full p-2.5 font-semibold cursor-not-allowed"
                         name="cas_finish_time"
-                        value="{{ $assignee->cas_finish_time ? $assignee->cas_finish_time->format('d M Y, H:i') . ' WIB' : '-' }}"
+                        value="{{ $assignee->cas_finish_time ? $assignee->cas_finish_time->translatedFormat('d M Y, H:i') . ' WIB' : '-' }}"
                         disabled>
 
                     @if ($assignee->cas_finish_time != null)
                         <p class="mt-2 text-sm text-black">
                             Selesai dalam waktu
-                            {{ $assignee->cas_start_time->diff($assignee->cas_finish_time)->format('%h jam %i menit %s detik') }}
+                            {{ $assignee->cas_start_time->diff($assignee->cas_finish_time)->format('%d hari %h jam %i menit') }}
                         </p>
                     @endif
 

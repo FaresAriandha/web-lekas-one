@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const inputs = document.querySelectorAll("input[data-char-count]");
+    const inputs = document.querySelectorAll(
+        "input[data-char-count], textarea[data-char-count]"
+    );
     const uploadBtnImg = document.getElementById("courier_img");
     const chosenImg = document.getElementById("img-preview");
     const uploadBtnPDF = document.querySelectorAll(".upload-pdf");
@@ -40,11 +42,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (datetimepicker) {
-        // flatpickr(".datetimepicker", {
-        //     enableTime: true,
-        //     dateFormat: "Y-m-d H:i:ss",
-        //     time_24hr: true,
-        // });
+        flatpickr(".datetimepicker", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i:ss",
+            time_24hr: true,
+        });
     }
 
     // new Datepicker(monthPicker, {
@@ -62,12 +64,10 @@ const updateCharacterCount = (e) => {
         input.type === "text" ||
         input.type === "textarea" ||
         input.type === "email" ||
-        input.type === "password"
+        input.type === "password" ||
+        input.type === "number"
     ) {
         maxCount = input.getAttribute("maxlength") || 100;
-    } else if (input.type === "number") {
-        const maxAttr = input.getAttribute("max");
-        maxCount = maxAttr ? String(maxAttr).length : 100;
     }
 
     const charCountSpan = input.parentElement.querySelector(".charCount");

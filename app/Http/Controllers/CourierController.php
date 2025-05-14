@@ -117,10 +117,12 @@ class CourierController extends Controller
             // Update data courier ke dalam database
             $courier->update($validatedData);
             $user = User::where('courier_ID', $courier->courier_ID)->first();
-            $user->update([
-                'user_name' => $courier->courier_name,
-                'user_img' => $courier->courier_img
-            ]);
+            if ($user) {
+                $user->update([
+                    'user_name' => $courier->courier_name,
+                    'user_img' => $courier->courier_img
+                ]);
+            }
 
             Session::flash('success', 'Data kurir berhasil diperbarui');
             return redirect()->route('admin.couriers.index');
@@ -179,12 +181,14 @@ class CourierController extends Controller
             'courier_birthdate.date'       => 'Tanggal lahir harus dalam format yang valid.',
 
             'courier_telp.required'         => 'No. Telp wajib diisi.',
-            'courier_telp.digits_between'   => 'No. Telp min 10 dan maks 14 digit',
+            'courier_telp.digits_between'   => 'No. Telp min 12 dan maks 15 digit.',
             'courier_telp.numeric'          => 'No. Telp hanya boleh berisi angka.',
+            'courier_telp.regex'           => 'No. Telp harus diawali dengan angka 62.',
 
-            'courier_telp_darurat.required'         => 'No. Telp wajib diisi.',
-            'courier_telp_darurat.digits_between'   => 'No. Telp min 10 dan maks 14 digit',
-            'courier_telp_darurat.numeric'          => 'No. Telp hanya boleh berisi angka.',
+            'courier_telp_darurat.required'         => 'No. Telp Darurat wajib diisi.',
+            'courier_telp_darurat.digits_between'   => 'No. Telp Darurat min 12 dan maks 15 digit.',
+            'courier_telp_darurat.numeric'          => 'No. Telp Darurat hanya boleh berisi angka.',
+            'courier_telp_darurat.regex'           => 'No. Telp Darurat harus diawali dengan angka 62.',
 
             'courier_gender.required'     => 'Jenis kelamin wajib diisi.',
             'courier_gender.in'     => 'Jenis kelamin harus laki-laki atau perempuan',
@@ -214,8 +218,8 @@ class CourierController extends Controller
             'courier_NIK'         => 'required|digits:16|numeric|unique:couriers,courier_NIK',
             'courier_birthplace'  => 'required|string|max:100|regex:/^[a-zA-Z\s]+$/',
             'courier_birthdate'   => 'required|date',
-            'courier_telp'        => 'required|digits_between:10,14|numeric',
-            'courier_telp_darurat' => 'required|digits_between:10,14|numeric',
+            'courier_telp'        => 'required|digits_between:12,15|numeric|regex:/^62[0-9]+$/',
+            'courier_telp_darurat' => 'required|digits_between:12,15|numeric|regex:/^62[0-9]+$/',
             'courier_gender'     => 'required|in:male,female',
             'courier_address'     => 'required|string|max:255',
             'courier_nama_rekening' => 'required|string|max:100|regex:/^[a-zA-Z\s]+$/',

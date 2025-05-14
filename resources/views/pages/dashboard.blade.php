@@ -174,7 +174,7 @@
             <p class="mb-5 italic">Berdasarkan setoran atas proyek paxel dan pasar jaya</p>
             <div class="relative overflow-x-scroll no-scrollbar shadow-md rounded-lg">
                 <table class="w-full h-fit text-sm text-left rtl:text-right text-gray-500">
-                    <thead class="text-[16px] capitalize bg-[#344357] text-white text-center">
+                    <thead class="text-[16px] capitalize bg-[#344357] text-white text-center text-nowrap">
                         <tr>
                             <th scope="col" class="px-6 py-3">
                                 No.
@@ -193,7 +193,7 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody class="text-[15px] h-fit text-black text-center">
+                    <tbody class="text-[15px] h-fit text-black text-center text-nowrap">
                         @if (count($courier_performs) > 0)
                             @foreach ($courier_performs as $index => $courier)
                                 <tr class="bg-white border-b border-gray-200 hover:bg-gray-100">

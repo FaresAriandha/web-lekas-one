@@ -52,7 +52,8 @@
         @endif
 
         <div class="flex justify-between items-start sm:items-start mb-4 flex-col sm:flex-col">
-            <h2 class="text-xl font-semibold mb-10">Tanggal Pengiriman : {{ $shipment_date->format('d M Y') }}</h2>
+            <h2 class="text-xl font-semibold mb-10">Tanggal Pengiriman : {{ $shipment_date->translatedFormat('d F Y') }}
+            </h2>
         </div>
 
 

@@ -148,16 +148,19 @@
                                     Rp.
                                     {{ number_format($client_bill->total_paid_client - $client_bill->total_bill_client, 0, '.', ',') }}
                                 </td>
-                                <td class="px-6 py-4 relative text-center">
-                                    <button
-                                        class="menu-btn text-white  cursor-pointer font-semibold bg-[#344357] px-3 p-2 rounded-md">
-                                        &#x22EE;
-                                    </button>
-                                    <div
-                                        class="menu-popup fixed right-[110px] sm:right-32 hidden mt-2 w-32 bg-white shadow-lg rounded-md z-50 p-2 text-nowrap">
-                                        <a href="{{ route('admin.client-bills.edit', $client_bill->cb_ID) }}"
-                                            class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md">Edit
-                                            Data</a>
+                                <td class="px-6 py-4 flex justify-center items-center">
+                                    <div class="relative w-fit h-fit">
+                                        <button
+                                            class="menu-btn text-white  cursor-pointer font-semibold bg-[#344357] px-3 p-2 rounded-md hover:bg-[#242e3b] active:bg-[#242e3b] focus:bg-[#242e3b] active:scale-90">
+                                            &#x22EE;
+                                        </button>
+
+                                        <div
+                                            class="menu-popup absolute {{ $client_bills->firstItem() + $index == $client_bills->lastItem() ? 'bottom-0' : '-top-[10px]' }} -left-[140px] hidden sm:right-36 w-32 bg-white shadow-lg rounded-md z-50 p-2 text-nowrap text-center">
+                                            <a href="{{ route('admin.client-bills.edit', $client_bill->cb_ID) }}"
+                                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-gray-100 focus:bg-gray-100 rounded-md">Edit
+                                                Data</a>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>

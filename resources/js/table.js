@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const rectContainerTable = containerTable.getBoundingClientRect();
 
             // Posisi popup
-            popup.style.top = `${rectMenuButton.top - 20}px`;
+            // popup.style.top = `${rectMenuButton.top - 20}px`;
             // popup.style.right = `${rectContainerTable.right}px`;
 
             popup.classList.toggle("hidden");

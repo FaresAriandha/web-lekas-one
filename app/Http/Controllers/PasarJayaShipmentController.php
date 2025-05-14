@@ -29,7 +29,7 @@ class PasarJayaShipmentController extends Controller
         $data = ["title" => "Proyek Pasar Jaya", "header_title" => "Kelola Riwayat Pengiriman Pasar Jaya"];
         $selectedDate = $request->input('shipment_date');
         $selectedRitase = $request->input('shipment_ritase');
-        $selectedLocation = $request->input('shipment_location');
+        $isRoundtrip = $request->input('shipment_roundtrip', false);
         $keyword = $request->input('keyword');
 
 
@@ -60,13 +60,13 @@ class PasarJayaShipmentController extends Controller
         }
 
         // Filter slot jika ada
-        if (!empty($selectedLocation)) {
-            $query->where(function ($q) use ($selectedLocation) {
-                $q->whereHas('location.price', function ($qc) use ($selectedLocation) {
-                    $qc->where('spl_name', $selectedLocation);
-                });
-            });
-            $data['shipment_location'] = $selectedLocation;
+        if (!empty($isRoundtrip)) {
+            if ($isRoundtrip === "Ya") {
+                $query->whereNotNull('roundtrip');
+            } else if ($isRoundtrip === "Tidak") {
+                $query->whereNull('roundtrip');
+            }
+            $data['shipment_roundtrip'] = $isRoundtrip;
         }
 
         // Filter keyword jika ada
@@ -85,6 +85,8 @@ class PasarJayaShipmentController extends Controller
                         $qc->where('courier_name', 'like', "%{$keyword}%");
                     })->orWhereHas('location', function ($qf) use ($keyword) {
                         $qf->where('shploc_name', 'like', "%{$keyword}%");
+                    })->orWhereHas('location.price', function ($qf) use ($keyword) {
+                        $qf->where('spl_name', 'like', "%{$keyword}%");
                     });
                 });
             }
@@ -100,7 +102,7 @@ class PasarJayaShipmentController extends Controller
         // Pagination dan passing data
         $data['pasjay_locations'] = $query->orderBy('created_at', 'desc')
             ->paginate(10)
-            ->appends($request->only('shipment_date', 'shipment_ritase', 'shipment_location', 'keyword'));
+            ->appends($request->only('shipment_date', 'shipment_ritase', 'shipment_roundtrip', 'keyword'));
 
         $data["prices"] = Price::whereNull('deleted_at') // Pastikan kurir belum di-soft delete
             ->where("spl_type", "pasjay")
@@ -116,9 +118,15 @@ class PasarJayaShipmentController extends Controller
     {
         $data = ["title" => "Tambah Pengiriman", "header_title" => "Tambah Pengiriman Pasar Jaya", "mode_insert" => "single"];
         // Ambil semua courier yang tidak terhapus dan belum ada di tabel fleets
+
         $query = Courier::select('courier_ID', 'courier_name')
-            ->whereNull('deleted_at') // Pastikan kurir belum di-soft delete
-            ->whereIn('courier_ID', Fleet::whereNotNull('courier_ID')->pluck('courier_ID')->toArray());
+            ->whereNull('deleted_at')
+            ->whereIn('courier_ID', function ($query) {
+                $query->select('courier_ID')
+                    ->from('fleets')
+                    ->whereNotNull('courier_ID')
+                    ->where('fleet_status', '!=', 'PERBAIKAN');
+            });
 
         if (Auth::user()->user_role === 'kurir') {
             $data["couriers"] = $query->where("courier_ID", Auth::user()->courier_ID)->get();
@@ -130,9 +138,12 @@ class PasarJayaShipmentController extends Controller
         // ->select('courier_ID', 'courier_name') // Pilih hanya field yang diperlukan
 
 
-        $data["locations"] = Location::whereNull('deleted_at') // Pastikan kurir belum di-soft delete
-            ->select('shploc_ID', 'shploc_name') // Pilih hanya field yang diperlukan
+        $data["locations"] = Location::whereNull('deleted_at')
+            ->whereHas('price')
+            ->with(['price:spl_ID,spl_name'])
+            ->select('shploc_ID', 'shploc_name', 'spl_ID')
             ->get();
+
         // dd($data["couriers"][0]->fleet->fleet_nopol);
         return view('pages.pasjay-shippings.create', $data);
     }
@@ -202,8 +213,10 @@ class PasarJayaShipmentController extends Controller
             ->select('courier_ID', 'courier_name') // Pilih hanya field yang diperlukan
             ->get();
 
-        $data["locations"] = Location::whereNull('deleted_at') // Pastikan kurir belum di-soft delete
-            ->select('shploc_ID', 'shploc_name') // Pilih hanya field yang diperlukan
+        $data["locations"] = Location::whereNull('deleted_at')
+            ->whereHas('price') // hanya ambil lokasi yang punya relasi price
+            ->with(['price:spl_ID,spl_name']) // ambil hanya spl_name dari tabel prices
+            ->select('shploc_ID', 'shploc_name', 'spl_ID') // pastikan ambil spl_ID agar relasi jalan
             ->get();
         $data["psj_location"] = $pasarJayaShipment;
         return view('pages.pasjay-shippings.edit', $data);
@@ -613,9 +626,75 @@ class PasarJayaShipmentController extends Controller
             ]);
         } else {
             // Jika sudah ada, update
-            $clientBill->update([
-                'total_bill_client' => $totalBill,
-            ]);
+            if ($totalBill == 0) {
+                $clientBill->delete();
+            } else {
+                $clientBill->update([
+                    'total_bill_client' => $totalBill,
+                ]);
+            }
         }
+    }
+
+
+    public static function destroyIfLocationGone(PasarJayaShipment $pasarJayaShipment)
+    {
+        $highestPriceLocationExisting = PasarJayaShipment::with('location.price')
+            ->where('courier_ID', $pasarJayaShipment['courier_ID'])
+            ->where('rit', $pasarJayaShipment['rit'])
+            ->whereDate('created_at', Carbon::parse($pasarJayaShipment['created_at'])->toDateString())
+            ->where('shpsj_ID', '!=', $pasarJayaShipment->shpsj_ID)
+            ->get()
+            ->sortByDesc(function ($item) {
+                return $item->location->price->spl_baseprice_client ?? 0;
+            })->first();
+
+        $isRoundtrip = PasarJayaShipment::with('location.price')
+            ->where('courier_ID', $pasarJayaShipment['courier_ID'])
+            ->where('rit', $pasarJayaShipment['rit'])
+            ->whereDate('created_at', Carbon::parse($pasarJayaShipment['created_at'])->toDateString())
+            ->where('shpsj_ID', '!=', $pasarJayaShipment->shpsj_ID)
+            ->whereNotNull('roundtrip')
+            ->first();
+
+        $pasjayBills = PasarJayaBill::where('courier_ID', $pasarJayaShipment['courier_ID'])
+            ->where('rit', $pasarJayaShipment['rit'])
+            ->whereDate('created_at', Carbon::parse($pasarJayaShipment['created_at'])->toDateString())
+            ->first();
+
+        try {
+            if (!$highestPriceLocationExisting) {
+                $pasjayBills->delete();
+            } else {
+                $total_multidrop = $pasjayBills->total_location - 2;
+                $pasjayBills->total_location = $pasjayBills->total_location - 1;
+                $pasjayBills->shploc_ID = $highestPriceLocationExisting->shploc_ID;
+                $multidrop_price = $highestPriceLocationExisting->location->price->spl_multidrop * $total_multidrop;
+                $multidrop_price_client = $highestPriceLocationExisting->location->price->spl_multidrop_client * $total_multidrop;
+                if ($isRoundtrip) {
+                    $pasjayBills->roundtrip = true;
+                    $pasjayBills->total_charge = $highestPriceLocationExisting->location->price->spl_baseprice + $highestPriceLocationExisting->location->price->spl_roundtrip + $multidrop_price;
+
+                    $pasjayBills->total_bill_client = $highestPriceLocationExisting->location->price->spl_baseprice_client + $highestPriceLocationExisting->location->price->spl_roundtrip_client + $multidrop_price_client;
+                } else {
+                    $pasjayBills->roundtrip = false;
+                    $pasjayBills->total_charge = $highestPriceLocationExisting->location->price->spl_baseprice + $multidrop_price;
+
+                    $pasjayBills->total_bill_client = $highestPriceLocationExisting->location->price->spl_baseprice_client + $multidrop_price_client;
+                }
+                $pasjayBills->save();
+            }
+
+            static::insertOrUpdateClientBill($pasarJayaShipment);
+            // dd("coba cek di db");
+
+            // Hapus data dari database
+            $pasarJayaShipment->delete();
+        } catch (\Exception $e) {
+            Session::flash('error', 'Gagal menghapus data pengiriman: ' . $e->getMessage());
+        }
+
+        // Redirect kembali ke daftar kurir
+        return redirect()->route('admin.pasjay-shippings.index');
     }
 }

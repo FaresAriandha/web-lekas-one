@@ -2,7 +2,10 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\PasarJayaShipmentController;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -35,9 +38,11 @@ class Location extends Model
     {
         static::deleting(function ($location) {
             if (!$location->isForceDeleting()) {
-                // 1. Soft delete relasi assigns
-                $location->pasarJayaShipments()->delete();
-                $location->pasarJayaBills()->delete();
+                // Soft delete relasi shipments & bills
+                foreach ($location->pasarJayaShipments as $shipment) {
+                    PasarJayaShipmentController::destroyIfLocationGone($shipment);
+                }
+                // $location->pasarJayaBills()->delete();
             }
         });
 

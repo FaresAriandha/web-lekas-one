@@ -8,9 +8,11 @@
     <link rel="icon" type="image/x-icon" href="/img/logo-lekas.png">
     <title>{{ $title }}</title>
 
-    @vite('resources/css/app.css')
+    {{-- @vite('resources/css/app.css')
     @vite('resources/js/app.js')
-    @vite('resources/js/flowbite.min.js')
+    @vite('resources/js/flowbite.min.js') --}}
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/flowbite.min.js'])
+
 
 </head>
 

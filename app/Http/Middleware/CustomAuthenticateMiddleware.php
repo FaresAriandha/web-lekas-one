@@ -29,9 +29,9 @@ class CustomAuthenticateMiddleware extends Middleware
                 case 'admin':
                     return route('admin.shippings.index'); // admin route
                 case 'korlap':
-                    return route('admin.couriers.index'); // korlap route
+                    return route('admin.assignees.index'); // korlap route
                 case 'kurir':
-                    return route('admin.locations.index'); // kurir route
+                    return route('admin.assignees.index'); // kurir route
                 default:
                     Auth::logout();
                     Session::flash('warning', 'Peran pengguna tidak valid.');

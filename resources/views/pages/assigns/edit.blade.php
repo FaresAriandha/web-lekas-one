@@ -196,10 +196,10 @@
                     </span>
                 </a>
                 <button type="submit"
-                    class="self-center mt-4 sm:mt-0 flex items-center justify-center space-x-2.5 w-full sm:w-36 bg-green-600 py-3 rounded-lg text-white font-bold cursor-pointer hover:bg-green-700 active:scale-95 duration-150"
+                    class="self-center mt-4 sm:mt-0 flex items-center justify-center space-x-2.5 w-full sm:w-36 bg-blue-400 py-3 rounded-lg text-white font-bold cursor-pointer hover:bg-blue-500 active:scale-95 duration-150"
                     name="btn-submit">
                     <span>
-                        SIMPAN
+                        PERBARUI
                     </span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

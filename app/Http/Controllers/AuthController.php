@@ -41,9 +41,9 @@ class AuthController extends Controller
                     case 'admin':
                         return redirect()->route('admin.shippings.index');
                     case 'korlap':
-                        return redirect()->route('couriers.index');
+                        return redirect()->route('admin.assignees.index');
                     case 'kurir':
-                        return redirect()->route('locations.index');
+                        return redirect()->route('admin.assignees.index');
                     default:
                         dd($user);
                         Auth::logout();

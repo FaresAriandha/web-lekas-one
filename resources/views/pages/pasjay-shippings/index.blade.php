@@ -59,17 +59,19 @@
                     action="{{ route('admin.pasjay-shippings.index') }}">
                     {{-- Dropdown Status --}}
                     <div
-                        class="dropdown-input relative w-48 mb-[10px] sm:mb-0 sm:mr-[10px] ring-1 ring-black overflow-hidden rounded-lg focus-within:ring-2 focus-within:ring-[#344357]">
+                        class="dropdown-input relative w-44 mb-[10px] sm:mb-0 sm:mr-[10px] ring-1 ring-black overflow-hidden rounded-lg focus-within:ring-2 focus-within:ring-[#344357]">
                         <select
                             class="appearance-none w-full bg-white border-0 px-4 py-2 focus:ring-2 outline-none focus:ring-[#344357] overflow-hidden text-ellipsis pr-8 box-border cursor-pointer"
-                            name="shipment_location">
-                            <option value="" selected>Pilih Kota</option>
-                            @foreach ($prices as $price)
-                                <option value="{{ $price->spl_name }}"
-                                    {{ isset($shipment_location) && $shipment_location == $price->spl_name ? 'selected' : '' }}>
-                                    {{ $price->spl_name }}
-                                </option>
-                            @endforeach
+                            name="shipment_roundtrip">
+                            <option value="" selected>Status Roundtrip</option>
+                            <option value="Ya"
+                                {{ isset($shipment_roundtrip) && $shipment_roundtrip === 'Ya' ? 'selected' : '' }}>
+                                Ya (Roundtrip)
+                            </option>
+                            <option value="Tidak"
+                                {{ isset($shipment_roundtrip) && $shipment_roundtrip === 'Tidak' ? 'selected' : '' }}>
+                                Tidak (Roundtrip)
+                            </option>
                         </select>
 
                         <!-- Custom Chevron Icon -->
@@ -139,7 +141,7 @@
 
         <div class="relative overflow-x-scroll no-scrollbar shadow-md rounded-lg">
             <table class="w-full h-fit text-sm text-left rtl:text-right text-gray-500">
-                <thead class="text-[16px] capitalize bg-[#344357] text-white text-nowrap">
+                <thead class="text-[16px] capitalize bg-[#344357] text-white text-nowrap sm:text-left text-center">
                     <tr>
                         <th scope="col" class="px-6 py-3 text-center">
                             No.
@@ -195,23 +197,26 @@
                                 <td class="px-6 py-4">
                                     {{ $psj_loc->courier->courier_name }}
                                 </td>
-                                <td class="px-6 py-4 relative text-center">
-                                    <button
-                                        class="menu-btn text-white  cursor-pointer font-semibold bg-[#344357] px-3 p-2 rounded-md">
-                                        &#x22EE;
-                                    </button>
-                                    <div
-                                        class="menu-popup fixed right-[110px] sm:right-32 hidden mt-2 w-32 bg-white shadow-lg rounded-md z-50 p-2 text-nowrap">
-                                        <a href="{{ route('admin.pasjay-shippings.show', $psj_loc->shpsj_ID) }}"
-                                            class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md">Lihat
-                                            Detail</a>
-                                        <a href="{{ route('admin.pasjay-shippings.edit', $psj_loc->shpsj_ID) }}"
-                                            class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md">Edit
-                                            Data</a>
-                                        <button type="button"
-                                            data-url="/admin/pasjay-shippings/{{ $psj_loc->shpsj_ID }}"
-                                            class="{{ Auth::user()->user_role !== 'kurir' ? '' : 'hidden' }} btn-hapus block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md cursor-pointer">Hapus
-                                            Data</button>
+                                <td class="px-6 py-4 flex justify-center items-center">
+                                    <div class="relative w-fit h-fit">
+                                        <button
+                                            class="menu-btn text-white  cursor-pointer font-semibold bg-[#344357] px-3 p-2 rounded-md hover:bg-[#242e3b] active:bg-[#242e3b] focus:bg-[#242e3b] active:scale-90">
+                                            &#x22EE;
+                                        </button>
+
+                                        <div
+                                            class="menu-popup absolute {{ $pasjay_locations->firstItem() + $index == $pasjay_locations->lastItem() ? 'bottom-0' : '-top-[10px]' }} -left-[140px] hidden sm:right-36 w-32 bg-white shadow-lg rounded-md z-50 p-2 text-nowrap text-center">
+                                            <a href="{{ route('admin.pasjay-shippings.show', $psj_loc->shpsj_ID) }}"
+                                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-gray-100 focus:bg-gray-100 rounded-md">Lihat
+                                                Detail</a>
+                                            <a href="{{ route('admin.pasjay-shippings.edit', $psj_loc->shpsj_ID) }}"
+                                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-gray-100 focus:bg-gray-100 rounded-md">Edit
+                                                Data</a>
+                                            <button type="button"
+                                                data-url="/admin/pasjay-shippings/{{ $psj_loc->shpsj_ID }}"
+                                                class="{{ Auth::user()->user_role !== 'kurir' ? '' : 'hidden' }} btn-hapus block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-gray-100 focus:bg-gray-100 rounded-md cursor-pointer">Hapus
+                                                Data</button>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>

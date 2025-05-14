@@ -169,7 +169,7 @@
 
         <div class="relative overflow-x-scroll no-scrollbar shadow-md rounded-lg">
             <table class="w-full h-fit text-sm text-left rtl:text-right text-gray-500">
-                <thead class="text-[16px] capitalize bg-[#344357] text-white">
+                <thead class="text-[16px] capitalize bg-[#344357] text-white text-nowrap sm:text-left text-center">
                     <tr>
                         <th scope="col" class="px-6 py-3 text-center">
                             No.
@@ -218,7 +218,7 @@
                                 <td class="px-6 py-4 text-center">
                                     {{ $awb_paxel->created_at->format('d/m/Y') }}
                                 </td>
-                                <td class="px-6 py-4 w-[200px]">
+                                <td class="px-6 py-4 w-[300px] text-nowrap">
                                     {{ $awb_paxel->awb_number }}
                                 </td>
                                 <td class="px-6 py-4 text-center">
@@ -230,28 +230,31 @@
                                 <td class="px-6 py-4 text-nowrap">
                                     {{ $awb_paxel->courier->courier_name }}
                                 </td>
-                                <td class="px-6 py-4 text-center">
+                                <td class="px-6 py-4 text-center text-nowrap">
                                     <span class="p-2 rounded-lg text-white font-semibold {{ $colorClass }}">
                                         {{ $awb_paxel->awb_status }}
                                     </span>
                                 </td>
-                                <td class="px-6 py-4 relative text-center">
-                                    <button
-                                        class="menu-btn text-white  cursor-pointer font-semibold bg-[#344357] px-3 p-2 rounded-md">
-                                        &#x22EE;
-                                    </button>
-                                    <div
-                                        class="menu-popup fixed right-[110px] sm:right-32 hidden mt-2 w-32 bg-white shadow-lg rounded-md z-50 p-2 text-nowrap">
-                                        <a href="{{ route('admin.paxel-shippings.show', $awb_paxel->shpxl_ID) }}"
-                                            class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md">Lihat
-                                            Detail</a>
-                                        <a href="{{ route('admin.paxel-shippings.edit', $awb_paxel->shpxl_ID) }}"
-                                            class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md">Edit
-                                            Data</a>
-                                        <button type="button"
-                                            data-url="/admin/paxel-shippings/{{ $awb_paxel->shpxl_ID }}"
-                                            class="{{ Auth::user()->user_role !== 'kurir' ? '' : 'hidden' }} btn-hapus block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md cursor-pointer">Hapus
-                                            Data</button>
+                                <td class="px-6 py-4 flex justify-center items-center">
+                                    <div class="relative w-fit h-fit">
+                                        <button
+                                            class="menu-btn text-white  cursor-pointer font-semibold bg-[#344357] px-3 p-2 rounded-md hover:bg-[#242e3b] active:bg-[#242e3b] focus:bg-[#242e3b] active:scale-90">
+                                            &#x22EE;
+                                        </button>
+
+                                        <div
+                                            class="menu-popup absolute {{ $awb_paxels->firstItem() + $index == $awb_paxels->lastItem() ? 'bottom-0' : '-top-[10px]' }} -left-[140px] hidden sm:right-36 w-32 bg-white shadow-lg rounded-md z-50 p-2 text-nowrap text-center">
+                                            <a href="{{ route('admin.paxel-shippings.show', $awb_paxel->shpxl_ID) }}"
+                                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-gray-100 focus:bg-gray-100 rounded-md">Lihat
+                                                Detail</a>
+                                            <a href="{{ route('admin.paxel-shippings.edit', $awb_paxel->shpxl_ID) }}"
+                                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-gray-100 focus:bg-gray-100 rounded-md">Edit
+                                                Data</a>
+                                            <button type="button"
+                                                data-url="/admin/paxel-shippings/{{ $awb_paxel->shpxl_ID }}"
+                                                class="{{ Auth::user()->user_role !== 'kurir' ? '' : 'hidden' }} btn-hapus block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-gray-100 focus:bg-gray-100 rounded-md cursor-pointer">Hapus
+                                                Data</button>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>

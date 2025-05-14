@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 30, 2025 at 04:52 AM
+-- Generation Time: May 09, 2025 at 02:50 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.3.6
 
@@ -112,7 +112,7 @@ INSERT INTO `couriers` (`courier_ID`, `courier_name`, `courier_NIK`, `courier_bi
 ('01jq1rkhv6rfj4jje7qphnzjc0', 'test', '3010232903902302', 'Jakarta Selatan', '1991-07-17', '089783298932', '08297328878', 'male', 'Jl. Bahagia Sederhana', 'test', '8329320129', 'couriers/images/1742871002.png', 'couriers/docs/1742743189.pdf', '2024-03-23 08:05:41', '2025-04-09 00:38:13', NULL),
 ('01jq1sz89ky1sz2fcgq8myhfky', 'test test', '0239029302932903', 'test test', '2025-03-22', '089374398989', '089598239293', 'female', 'test test', 'test test', '0283923929', 'couriers/images/1742743773.png', 'couriers/docs/1742743773.pdf', '2025-03-23 08:29:33', '2025-04-12 08:22:44', '2025-04-14 17:00:00'),
 ('01jq38td3bhxncmvh1bd83fjpe', 'test test test test', '3293209012102909', 'Tangerang', '2025-03-31', '08962938928', '0896239832989', 'male', 'Jl. Tenang', 'test test test', '2320901201', 'couriers/images/1742792897.jpeg', 'couriers/docs/1742792897.pdf', '2025-03-23 22:08:17', '2025-04-08 23:35:52', NULL),
-('01jq3fnaa3cbkgw9sypw2yv2y1', 'fares', '2320293029302092', 'Tangerang', '2025-03-26', '08970238929', '089683489389', 'male', 'test', 'Fares', '2102910931', 'couriers/images/1742800070.jpeg', 'couriers/docs/1742870928.pdf', '2025-03-24 00:07:50', '2025-04-07 04:26:51', NULL);
+('01jq3fnaa3cbkgw9sypw2yv2y1', 'Fares Lekas', '2320293029302092', 'Tangerang', '2025-03-26', '08970238929', '089683489389', 'male', 'test', 'Fares', '2102910931', 'couriers/images/1746514141.jpeg', 'couriers/docs/1742870928.pdf', '2025-03-24 00:07:50', '2025-05-05 23:49:01', NULL);
 
 -- --------------------------------------------------------
 
@@ -378,7 +378,8 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('7VHldxeWrIgpPefWo4ga7PZcuAXksX5sB2QFTREA', '01jsyg9hyms5pkn8b2evz8411n', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiMWJ6a1EzYkFJQlVqdjhwd0FWREo1bnV6SHNlQVBkdUlneDNsZGM5USI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJuZXciO2E6MDp7fXM6Mzoib2xkIjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzM6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi91c2VycyI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtzOjI2OiIwMWpzeWc5aHltczVwa244YjJldno4NDExbiI7fQ==', 1745939331);
+('8wyubw9FS0nZ3x5UjRmkCT8l5DPlzRoehkF8XKsP', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiNGk2MG1ZTGNRSENZa2hsSVRJVmdidHhjbzFGaFhYQzBPV3JFRUZuQyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJuZXciO2E6MDp7fXM6Mzoib2xkIjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7fX0=', 1746619707),
+('iWkNZ5opyc1Re658T9aDjwJibVLeFoxK3Qkg8qaP', '01jsy9d396d4j0aqmr17st8tne', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiOGdlaE9HVnFXUnlWVHhDU0NXbTE0U0dGYzd0Ykhzdk9tRHc0RWg0ZSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJuZXciO2E6MDp7fXM6Mzoib2xkIjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NjU6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi91c2Vycy8wMWpzeTlkMzk2ZDRqMGFxbXIxN3N0OHRuZS9lZGl0Ijt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO3M6MjY6IjAxanN5OWQzOTZkNGowYXFtcjE3c3Q4dG5lIjt9', 1746675991);
 
 -- --------------------------------------------------------
 
@@ -586,8 +587,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_ID`, `courier_ID`, `user_name`, `username`, `password`, `user_role`, `user_img`, `remember_token`, `created_at`, `updated_at`, `deleted_at`) VALUES
-('01jsy8hx8ccszexe8ne95w33ep', NULL, 'Rizkyadi Ihwan', 'rizkylks21', '$2y$12$xjKlGy4WYBLKbZ1t/5ZQYeTr3Hs9.MRcf.mXQ0fI49YG5Gz9TDRrG', 'korlap', 'users/images/1745853518.png', NULL, '2025-04-28 06:14:32', '2025-04-28 08:35:38', NULL),
-('01jsy9d396d4j0aqmr17st8tne', '01jq3fnaa3cbkgw9sypw2yv2y1', 'fares', 'fareslks21', '$2y$12$NYyENOEPLepAtqX7U.1euuZxsALMqxyL0q.Rjc.VV1kb3kLW4aM5q', 'kurir', 'couriers/images/1742800070.jpeg', NULL, '2025-04-28 06:29:23', '2025-04-29 07:14:52', NULL),
+('01jsy8hx8ccszexe8ne95w33ep', NULL, 'Rizkyadi Ihwan', 'rizkylks21', '$2y$12$xjKlGy4WYBLKbZ1t/5ZQYeTr3Hs9.MRcf.mXQ0fI49YG5Gz9TDRrG', 'korlap', 'users/images/1746015998.png', NULL, '2025-04-28 06:14:32', '2025-04-30 05:31:43', NULL),
+('01jsy9d396d4j0aqmr17st8tne', '01jq3fnaa3cbkgw9sypw2yv2y1', 'Fares Lekas', 'fareslks21', '$2y$12$ffU6Id0x82ExL86/paTgl.AoZgAJ4/aE7HhkXPauXY5W0URtI6f3G', 'kurir', 'couriers/images/1746514141.jpeg', NULL, '2025-04-28 06:29:23', '2025-05-05 23:49:01', NULL),
 ('01jsyg9hyms5pkn8b2evz8411n', NULL, 'Robby Gunawan Sinaga', 'robbylks21', '$2y$12$u0OtDjy80TWpk61WbL8EPuOpaGMdGJPcZSKtTIV1w0XLcDuok89j.', 'admin', 'users/images/1745854316.png', NULL, '2025-04-28 08:29:47', '2025-04-29 07:54:26', NULL);
 
 --

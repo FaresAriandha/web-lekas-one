@@ -86,7 +86,7 @@
 
         <div class="relative overflow-x-scroll no-scrollbar shadow-md rounded-lg">
             <table class="w-full h-fit text-sm text-left rtl:text-right text-gray-500">
-                <thead class="text-[16px] capitalize bg-[#344357] text-white text-nowrap">
+                <thead class="text-[16px] capitalize bg-[#344357] text-white text-nowrap sm:text-left text-center">
                     <tr>
                         <th scope="col" class="px-6 py-3 text-center">
                             No.
@@ -108,7 +108,7 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody class="text-[15px] h-fit text-black">
+                <tbody class="text-[15px] h-fit text-black text-nowrap">
                     @if (count($couriers) > 0)
                         @foreach ($couriers as $index => $courier)
                             @php
@@ -136,7 +136,7 @@
                                 </td>
 
                                 <td class="px-6 py-4 text-center">
-                                    {{ $courier->created_at->format('d M Y') }}
+                                    {{ $courier->created_at->translatedFormat('d M Y') }}
                                     ({{ $formattedDiff }})
                                 </td>
                                 <td class="px-6 py-4 text-nowrap">
@@ -145,22 +145,25 @@
                                 <td class="px-6 py-4 text-center">
                                     {{ $courier->courier_no_rekening }}
                                 </td>
-                                <td class="px-6 py-4 relative text-center">
-                                    <button
-                                        class="menu-btn text-white  cursor-pointer font-semibold bg-[#344357] px-3 p-2 rounded-md">
-                                        &#x22EE;
-                                    </button>
-                                    <div
-                                        class="menu-popup fixed right-[110px] sm:right-32 hidden mt-2 w-32 bg-white shadow-lg rounded-md z-50 p-2 text-nowrap">
-                                        <a href="{{ route('admin.couriers.show', $courier->courier_ID) }}"
-                                            class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md">Lihat
-                                            Detail</a>
-                                        <a href="{{ route('admin.couriers.edit', $courier->courier_ID) }}"
-                                            class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md">Edit
-                                            Data</a>
-                                        <button type="button" data-url="/admin/couriers/{{ $courier->courier_ID }}"
-                                            class="btn-hapus block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md cursor-pointer">Hapus
-                                            Data</button>
+                                <td class="px-6 py-4 flex justify-center">
+                                    <div class="relative w-fit h-fit">
+                                        <button
+                                            class="menu-btn text-white  cursor-pointer font-semibold bg-[#344357] px-3 p-2 rounded-md hover:bg-[#242e3b] active:bg-[#242e3b] focus:bg-[#242e3b] active:scale-90">
+                                            &#x22EE;
+                                        </button>
+
+                                        <div
+                                            class="menu-popup absolute {{ $couriers->firstItem() + $index == $couriers->lastItem() ? 'bottom-0' : '-top-[10px]' }} -left-[140px] hidden sm:right-36 w-32 bg-white shadow-lg rounded-md z-50 p-2 text-nowrap text-center">
+                                            <a href="{{ route('admin.couriers.show', $courier->courier_ID) }}"
+                                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-gray-100 focus:bg-gray-100 rounded-md">Lihat
+                                                Detail</a>
+                                            <a href="{{ route('admin.couriers.edit', $courier->courier_ID) }}"
+                                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-gray-100 focus:bg-gray-100 rounded-md">Edit
+                                                Data</a>
+                                            <button type="button" data-url="/admin/couriers/{{ $courier->courier_ID }}"
+                                                class="btn-hapus block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-gray-100 focus:bg-gray-100 rounded-md cursor-pointer">Hapus
+                                                Data</button>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>

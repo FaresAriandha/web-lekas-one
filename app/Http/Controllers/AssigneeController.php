@@ -22,8 +22,6 @@ class AssigneeController extends Controller
         $selectedStatus = $request->input('assignee_status');
         $keyword = $request->input('keyword');
 
-
-
         // Query CourierAssign
         $query = Assignee::with([
             'courier:courier_ID,courier_name',
@@ -72,11 +70,19 @@ class AssigneeController extends Controller
         }
 
 
-
         // Pagination dan passing data
         $data['assignees'] = $query->orderBy('cas_pickup_time', 'desc')
             ->paginate(2)
-            ->appends($request->only('assignee_date', 'assignee_status', 'keyword'));
+            ->through(function ($item) {
+                // Bulatkan waktu-waktu penting
+                $item->cas_arrived_time = $this->roundToNearestMinute($item->cas_arrived_time);
+                $item->cas_start_time   = $this->roundToNearestMinute($item->cas_start_time);
+                $item->cas_finish_time  = $this->roundToNearestMinute($item->cas_finish_time);
+
+                return $item;
+            })
+            ->appends(request()->only('assignee_date', 'assignee_status', 'keyword'));
+
         // dd($data['assignees']);
         return view('pages.assigns.index', $data);
     }
@@ -89,9 +95,14 @@ class AssigneeController extends Controller
     {
         $data = ["title" => "Tambah Penugasan", "header_title" => "Tambah Data Penugasan"];
         // Ambil semua courier yang tidak terhapus dan belum ada di tabel fleets
-        $data["couriers"] = Courier::whereNull('deleted_at') // Pastikan kurir belum di-soft delete
-            ->whereIn('courier_ID', Fleet::whereNotNull('courier_ID')->pluck('courier_ID')->toArray()) // Ambil hanya yang sudah terisi
-            ->select('courier_ID', 'courier_name') // Pilih hanya field yang diperlukan
+        $data["couriers"] = Courier::whereNull('deleted_at')
+            ->whereIn('courier_ID', function ($query) {
+                $query->select('courier_ID')
+                    ->from('fleets')
+                    ->whereNotNull('courier_ID')
+                    ->where('fleet_status', '!=', 'PERBAIKAN');
+            })
+            ->select('courier_ID', 'courier_name')
             ->get();
         // dd($data["couriers"][0]->fleet->fleet_nopol);
         return view('pages.assigns.create', $data);
@@ -124,6 +135,10 @@ class AssigneeController extends Controller
     public function show(Assignee $assignee)
     {
         $data = ["title" => "Detail Penugasan", "header_title" => "Detail Data Penugasan"];
+        // Bulatkan langsung pada properti model
+        $assignee->cas_arrived_time = static::roundToNearestMinute($assignee->cas_arrived_time);
+        $assignee->cas_start_time = static::roundToNearestMinute($assignee->cas_start_time);
+        $assignee->cas_finish_time = static::roundToNearestMinute($assignee->cas_finish_time);
         $data["assignee"] = $assignee;
         return view('pages.assigns.detail', $data);
     }
@@ -134,10 +149,17 @@ class AssigneeController extends Controller
     public function edit(Assignee $assignee)
     {
         $data = ["title" => "Edit Penugasan", "header_title" => "Edit Data Penugasan"];
+
         $data["assignee"] = $assignee;
-        $data["couriers"] = Courier::whereNull('deleted_at') // Pastikan kurir belum di-soft delete
-            ->whereIn('courier_ID', Fleet::whereNotNull('courier_ID')->pluck('courier_ID')->toArray()) // Ambil hanya yang sudah terisi
-            ->select('courier_ID', 'courier_name') // Pilih hanya field yang diperlukan
+
+        $data["couriers"] = Courier::whereNull('deleted_at')
+            ->whereIn('courier_ID', function ($query) {
+                $query->select('courier_ID')
+                    ->from('fleets')
+                    ->whereNotNull('courier_ID')
+                    ->where('fleet_status', '!=', 'PERBAIKAN');
+            })
+            ->select('courier_ID', 'courier_name')
             ->get();
         return view('pages.assigns.edit', $data);
     }
@@ -152,12 +174,14 @@ class AssigneeController extends Controller
         try {
 
             // Update data courier ke dalam database
-            if ($validatedData['cas_status'] == "Siap Pickup") {
-                $validatedData['cas_arrived_time'] = Carbon::now()->timezone('Asia/Jakarta')->format('Y-m-d H:i:s');
-            } else if ($validatedData['cas_status'] == "Dalam Tugas") {
-                $validatedData['cas_start_time'] = Carbon::now()->timezone('Asia/Jakarta')->format('Y-m-d H:i:s');
-            } else if ($validatedData['cas_status'] == "Selesai") {
-                $validatedData['cas_finish_time'] = Carbon::now()->timezone('Asia/Jakarta')->format('Y-m-d H:i:s');
+            if ($assignee->cas_status != $validatedData['cas_status']) {
+                if ($validatedData['cas_status'] == "Siap Pickup") {
+                    $validatedData['cas_arrived_time'] = Carbon::now()->timezone('Asia/Jakarta')->format('Y-m-d H:i:s');
+                } else if ($validatedData['cas_status'] == "Dalam Tugas") {
+                    $validatedData['cas_start_time'] = Carbon::now()->timezone('Asia/Jakarta')->format('Y-m-d H:i:s');
+                } else if ($validatedData['cas_status'] == "Selesai") {
+                    $validatedData['cas_finish_time'] = Carbon::now()->timezone('Asia/Jakarta')->format('Y-m-d H:i:s');
+                }
             }
 
             $assignee->update($validatedData);
@@ -167,7 +191,7 @@ class AssigneeController extends Controller
         } catch (\Throwable $th) {
             // Simpan pesan error ke session
             Session::flash('error', 'Gagal memperbarui data penugasan');
-            return redirect()->route('admin.assignees.index', $assignee->cas_ID)->withInput();
+            return redirect()->route('admin.assignees.edit', $assignee->cas_ID)->withInput();
         }
     }
 
@@ -210,8 +234,14 @@ class AssigneeController extends Controller
             'cas_pickup_time'  => 'required|date_format:Y-m-d H:i:s',
         ];
 
+
         if ($request->isMethod('PUT')) {
             $validationFormat['cas_status'] = 'required|in:Ditugaskan,Siap Pickup,Dalam Tugas,Selesai';
+            if (Auth::user()->user_role === "kurir") {
+                $validationFormat['courier_ID'] = "";
+                $validationFormat['cas_type'] = "";
+                $validationFormat['cas_pickup_time'] = "";
+            }
         }
 
 
@@ -219,5 +249,20 @@ class AssigneeController extends Controller
         // dd($validatedData);
 
         return $validatedData;
+    }
+
+
+    static private function roundToNearestMinute($carbonTime)
+    {
+        if (!$carbonTime instanceof Carbon || is_null($carbonTime)) {
+            return null;
+        }
+
+        $rounded = $carbonTime->copy()->second(0);
+        if ($carbonTime->second >= 30) {
+            $rounded->addMinute();
+        }
+
+        return $rounded;
     }
 }

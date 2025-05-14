@@ -1,5 +1,5 @@
 <aside
-    class="h-screen w-64 text-white fixed z-20 -translate-x-64 opacity-0 sm:opacity-100 sm:translate-x-0 duration-300 bg-[#344357]"
+    class="h-screen w-64 text-white fixed z-30 -translate-x-64 opacity-0 sm:opacity-100 sm:translate-x-0 duration-300 bg-[#344357]"
     id="sidebar">
     {{-- Logo --}}
     <div
@@ -145,7 +145,7 @@
             </div>
         </div>
         <hr class="text-white border {{ Auth::user()->user_role === 'admin' ? '' : 'hidden' }}">
-        <div class="w-full h-fit my-[20px] px-4 {{ Auth::user()->user_role === 'admin' ? '' : 'hidden' }}">
+        <div class="w-full h-fit my-[20px] mb-[80px] px-4 {{ Auth::user()->user_role === 'admin' ? '' : 'hidden' }}">
             <h1>Transaksi</h1>
             <div class="my-[20px]">
                 <a class="{{ Auth::user()->user_role === 'admin' ? '' : 'hidden' }} w-full flex justify-start items-center group font-semibold px-4 py-2 rounded-md  gap-[10px] {{ request()->is('admin/courier-payments*') ? 'bg-[#52C3BE] shadow-xl text-[#344357]' : 'hover:bg-[#52C3BE] active:bg-[#52C3BE] hover:shadow-xl hover:text-[#344357] active:text-[#344357] text-white' }}"
@@ -176,7 +176,7 @@
         </div>
     </div>
 
-    <div class="w-full h-[60px] flex justify-between items-center bg-[#2b3848] absolute bottom-0 text-white"
+    <div class="w-64 h-[60px] flex justify-between items-center bg-[#2b3848] fixed bottom-0 left-0 text-white"
         id="profile">
 
         <a class="w-[70%] h-fit px-2 py-2 flex items-center  rounded-lg hover:bg-[#40536b] cursor-pointer active:bg-[#40536b] ms-3"

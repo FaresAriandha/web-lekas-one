@@ -211,7 +211,7 @@
                         <input type="number" id="courier_no_rekening" aria-describedby="helper-text-explanation"
                             class="border-0 ring-1 ring-[#344357] text-[#344357] text-sm rounded-lg focus:ring-2 focus:outline-none block w-full p-2.5"
                             placeholder="3214567896" name="courier_no_rekening" autocomplete="off" data-char-count
-                            max="9999999999" value="{{ old('courier_no_rekening', $courier->courier_no_rekening) }}">
+                            maxlength="10" value="{{ old('courier_no_rekening', $courier->courier_no_rekening) }}">
                         @error('courier_no_rekening')
                             <p class="mt-2 text-sm text-red-500">
                                 {{ $message }}
@@ -235,14 +235,14 @@
                         <input type="number" id="courier_telp" aria-describedby="helper-text-explanation"
                             class="border-0 ring-1 ring-[#344357] text-[#344357] text-sm rounded-lg focus:ring-2 focus:outline-none block w-full p-2.5"
                             placeholder="08923892382" name="courier_telp" autocomplete="off" data-char-count
-                            max="99999999999999" value="{{ old('courier_telp', $courier->courier_telp) }}">
+                            maxlength="15" value="{{ old('courier_telp', $courier->courier_telp) }}">
                         @error('courier_telp')
                             <p class="mt-2 text-sm text-red-500">
                                 {{ $message }}
                             </p>
                         @enderror
                         <span class="charCount absolute -top-7 right-2 text-sm text-gray-500">
-                            0 / 14
+                            0 / 15
                         </span>
                     </div>
                 </div>
@@ -254,15 +254,14 @@
                         <input type="number" id="courier_telp_darurat" aria-describedby="helper-text-explanation"
                             class="border-0 ring-1 ring-[#344357] text-[#344357] text-sm rounded-lg focus:ring-2 focus:outline-none block w-full p-2.5"
                             placeholder="089729389238" name="courier_telp_darurat" autocomplete="off" data-char-count
-                            max="99999999999999"
-                            value="{{ old('courier_telp_darurat', $courier->courier_telp_darurat) }}">
+                            maxlength="15" value="{{ old('courier_telp_darurat', $courier->courier_telp_darurat) }}">
                         @error('courier_telp_darurat')
                             <p class="mt-2 text-sm text-red-500">
                                 {{ $message }}
                             </p>
                         @enderror
                         <span class="charCount absolute -top-7 right-2 text-sm text-gray-500">
-                            0 / 14
+                            0 / 15
                         </span>
                     </div>
                 </div>

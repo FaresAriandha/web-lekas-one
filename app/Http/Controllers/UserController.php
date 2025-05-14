@@ -160,7 +160,7 @@ class UserController extends Controller
             $user->update($validatedData);
             // User::create($validatedData);
 
-            if ($user->user_role !== 'admin') {
+            if (Auth::user()->user_role !== 'admin') {
                 switch ($user->user_role) {
                     case 'korlap':
                         return redirect()->route('admin.couriers.index');

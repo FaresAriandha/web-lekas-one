@@ -102,10 +102,16 @@ class PaxelShipmentController extends Controller
             $data["mode_insert"] = $request->get("mode_insert");
         }
         // Ambil semua courier yang tidak terhapus dan belum ada di tabel fleets
-        $data["couriers"] = Courier::whereNull('deleted_at') // Pastikan kurir belum di-soft delete
-            ->whereIn('courier_ID', Fleet::whereNotNull('courier_ID')->pluck('courier_ID')->toArray()) // Ambil hanya yang sudah terisi
-            ->select('courier_ID', 'courier_name') // Pilih hanya field yang diperlukan
+        $data["couriers"] = Courier::whereNull('deleted_at')
+            ->whereIn('courier_ID', function ($query) {
+                $query->select('courier_ID')
+                    ->from('fleets')
+                    ->whereNotNull('courier_ID')
+                    ->where('fleet_status', '!=', 'PERBAIKAN');
+            })
+            ->select('courier_ID', 'courier_name')
             ->get();
+
         // dd($data["couriers"][0]->fleet->fleet_nopol);
         return view('pages.paxel-shippings.create', $data);
     }
@@ -132,11 +138,15 @@ class PaxelShipmentController extends Controller
         try {
             // Input File
             if ($request->get("mode_insert") == "multiple") {
-                $totalAWB = static::multipleInsert($request, $validatedData);
-                static::insertToPaxelBill($validatedData, $baseprice_paxel->spl_baseprice_client);
-                static::insertOrUpdateClientBill($validatedData);
-                Session::flash('success', "$totalAWB data AWB berhasil ditambahkan!");
-                return redirect()->route('admin.paxel-shippings.index');
+                try {
+                    $totalAWB = static::multipleInsert($request, $validatedData);
+                    static::insertToPaxelBill($validatedData, $baseprice_paxel->spl_baseprice_client);
+                    static::insertOrUpdateClientBill($validatedData);
+                    Session::flash('success', "$totalAWB data AWB berhasil ditambahkan!");
+                    return redirect()->route('admin.paxel-shippings.index');
+                } catch (\Exception $e) {
+                    return redirect()->route('admin.paxel-shippings.create', ['mode_insert' => 'multiple'])->withInput()->withErrors(['awb_excel' => $e->getMessage()]);
+                }
             } else if ($request->get("mode_insert") == "single") {
                 PaxelShipment::create($validatedData);
                 static::insertToPaxelBill($validatedData, $baseprice_paxel->spl_baseprice_client);
@@ -394,27 +404,30 @@ class PaxelShipmentController extends Controller
         $collection = Excel::toCollection(null, $request->file('awb_excel'))[0];
         // dd($collection);
 
+        // Validasi: pastikan file punya header 'Shipment Code'
+        $awb_column_index = null;
+        $header_row = $collection->first();
+
+        foreach ($header_row as $key => $value) {
+            if (preg_match('/^shipment\s*code$/i', trim($value))) {
+                $awb_column_index = $key;
+                break;
+            }
+        }
+
+        // Lempar pesan kesalahan
+        if (is_null($awb_column_index)) {
+            throw new \Exception('File Excel yang diunggah tidak sesuai format!');
+        }
+
         $duplikat_awbs = [];
         $insert_data = [];
 
         foreach ($collection as $index => $row) {
-            // Lewati baris kosong atau header
-            // if ($index === 0 || empty($row['Shipment code'] ?? $row[0])) continue;
-            if ($index === 0) {
-                foreach ($row as $key => $value) {
-                    if (preg_match('/shipment\s*code/i', $value)) {
-                        $awb_column_index = $key;
-                        break;
-                    }
-                }
-                continue; // Lewati baris header
-            }
+            // Lewati baris kosong atau <header></header>
+            if ($index === 0) continue; // Lewati header
 
-            // $awb_number = $row['Shipment code'] ?? $row[0];
-
-            if ($awb_column_index === null || empty($row[$awb_column_index])) {
-                continue;
-            }
+            if (empty($row[$awb_column_index])) continue;
 
             $awb_number = trim($row[$awb_column_index]);
 
@@ -435,11 +448,7 @@ class PaxelShipmentController extends Controller
 
         // Jika ada duplikat, hentikan proses dan tampilkan pesan
         if (count($duplikat_awbs)) {
-            return back()
-                ->withInput()
-                ->withErrors([
-                    'awb_excel' => 'Proses dihentikan. Ditemukan nomor AWB duplikat: ' . implode(', ', $duplikat_awbs),
-                ]);
+            throw new \Exception('Proses dihentikan. Ditemukan nomor AWB duplikat: ' . implode(', ', $duplikat_awbs));
         }
 
         $now = Carbon::now();
@@ -508,9 +517,13 @@ class PaxelShipmentController extends Controller
             ]);
         } else {
             // Jika sudah ada, update
-            $clientBill->update([
-                'total_bill_client' => $totalBill,
-            ]);
+            if ($totalBill == 0) {
+                $clientBill->delete();
+            } else {
+                $clientBill->update([
+                    'total_bill_client' => $totalBill,
+                ]);
+            }
         }
     }
 }

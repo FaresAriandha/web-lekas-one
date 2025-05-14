@@ -9,9 +9,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <title>{{ $title }}</title>
 
-    @vite('resources/css/app.css')
+    {{-- @vite('resources/css/app.css')
     @vite('resources/js/app.js')
-    @vite('resources/js/flowbite.min.js')
+    @vite('resources/js/flowbite.min.js') --}}
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
@@ -19,12 +20,13 @@
 </head>
 
 <body>
-    <div class="h-screen flex justify-start overflow-x-hidden no-scrollbar">
+    <div class="h-screen flex justify-start no-scrollbar">
         {{-- Sidebar --}}
         @include('components.sidebar')
 
         {{-- Content --}}
-        <main class="w-screen sm:w-[calc(100%-16rem)] relative translate-x-0 sm:translate-x-64 duration-300"
+        <main
+            class="w-screen sm:w-[calc(100%-16rem)] relative translate-x-0 sm:translate-x-64 duration-300 z-10 no-scrollbar"
             id="main">
             @include('components.header')
             <section class="w-full h-full overflow-y-auto p-6 bg-[#F3F4F6] no-scrollbar">
@@ -39,7 +41,7 @@
 
     </div>
 
-    <div class="fixed h-screen w-screen bg-gray-300 opacity-0 z-10 top-0 left-0 hidden duration-500 transition-opacity"
+    <div class="fixed h-screen w-screen bg-gray-800 opacity-0 z-20 top-0 left-0 hidden duration-500 transition-opacity"
         id="overlay">
     </div>
 

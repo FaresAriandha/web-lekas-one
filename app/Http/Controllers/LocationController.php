@@ -189,7 +189,7 @@ class LocationController extends Controller
         ];
 
         $validationFormat = [
-            'shploc_name'      => 'required|string|max:100|unique:shipment_pasjay_locations,shploc_name|regex:/^[a-zA-Z\s]+$/',
+            'shploc_name'      => 'required|string|max:100|unique:shipment_pasjay_locations,shploc_name|regex:/^[a-zA-Z.,()\s]+$/',
             'shploc_address'   => 'required|string',
             'spl_ID'        => 'required|exists:shipment_price_lists,spl_ID|ulid',
             'shploc_url_maps'  => 'required|url',
@@ -198,7 +198,7 @@ class LocationController extends Controller
 
         if ($request->isMethod('PUT')) {
             if ($request->input('shploc_name') == $location['shploc_name']) {
-                $validationFormat['shploc_name'] = 'required|string|max:100|regex:/^[a-zA-Z\s]+$/';
+                $validationFormat['shploc_name'] = 'required|string|max:100|regex:/^[a-zA-Z.,()\s]+$/';
             }
         }
 

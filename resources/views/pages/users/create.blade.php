@@ -181,7 +181,7 @@
                 </div>
 
 
-                <div class="{{ $mode_insert == 'courier' ? 'w-[48.5%]' : 'w-full' }}">
+                <div class="{{ $mode_insert == 'courier' ? 'w-full sm:w-[48.5%]' : 'w-full' }}">
                     <label for="password" class="block mb-2 w-fit text-sm font-medium text-[#344357] ">Kata Sandi
                         Pengguna</label>
                     <div class="relative">

@@ -2,6 +2,55 @@
 
 @section('content')
     <div class="bg-white shadow rounded-2xl p-6" id="container-table">
+        @if (session('success'))
+            <div id="toast-success"
+                class="hidden items-center sm:absolute sm:top-[10px] sm:right-[10px] w-full max-w-xs p-4 mb-4 text-[#344357] bg-green-100 rounded-lg shadow-sm opacity-0 duration-300"
+                role="alert">
+                <div class="inline-flex items-center justify-center w-8 h-8 text-green-500 bg-green-200 rounded-lg">
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                        viewBox="0 0 20 20">
+                        <path
+                            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+                    </svg>
+                </div>
+                <div class="ms-3 text-sm font-semibold">{{ session('success', 'Berhasil') }}</div>
+                <button type="button"
+                    class="ms-auto -mx-1.5 -my-1.5 bg-[#344357] text-white rounded-lg p-1.5  inline-flex items-center justify-center h-8 w-8 cursor-pointer"
+                    data-dismiss-target="#toast-success" aria-label="Close">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                </button>
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div id="toast-danger"
+                class="hidden items-center sm:absolute sm:top-[10px] sm:right-[10px] w-full max-w-xs p-4 mb-4 text-[#344357] bg-red-100 rounded-lg shadow-sm opacity-0 duration-300"
+                role="alert">
+                <div class="inline-flex items-center justify-center w-8 h-8 text-red-500 bg-red-200 rounded-lg">
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                        viewBox="0 0 20 20">
+                        <path
+                            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z" />
+                    </svg>
+                    <span class="sr-only">Error icon</span>
+                </div>
+                <div class="ms-3 text-sm font-semibold">{{ session('error', 'Gagal') }}</div>
+                <button type="button"
+                    class="ms-auto -mx-1.5 -my-1.5 bg-[#344357] text-white rounded-lg p-1.5  inline-flex items-center justify-center h-8 w-8 cursor-pointer"
+                    data-dismiss-target="#toast-danger" aria-label="Close">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                </button>
+            </div>
+        @endif
+
         <div class="flex justify-between items-start sm:items-start mb-4 flex-col sm:flex-col">
             <h2 class="text-xl font-semibold mb-10">Daftar Penugasan Kurir</h2>
             <div class="flex flex-col sm:flex-row items-start flex-wrap justify-between w-full ">
@@ -78,8 +127,8 @@
                     class="{{ Auth::user()->user_role !== 'kurir' ? '' : 'hidden' }} flex items-center mt-5 sm:mt-0 bg-[#344357] px-3 py-2 rounded-md text-white font-semibold shadow-md cursor-pointer  active:translate-y-[3px] self-end">
                     Tambah
                     <svg class="w-[20px] h-[20px] text-white ml-[5px]" xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round" class="lucide lucide-plus">
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus">
                         <path d="M5 12h14" />
                         <path d="M12 5v14" />
                     </svg>
@@ -91,7 +140,7 @@
 
         <div class="relative overflow-x-scroll shadow-md rounded-lg">
             <table class="w-full h-fit text-sm text-left rtl:text-right text-gray-500">
-                <thead class="text-[16px] capitalize bg-[#344357] text-white text-nowrap">
+                <thead class="text-[16px] capitalize bg-[#344357] text-white text-nowrap sm:text-left text-center">
                     <tr>
                         <th scope="col" class="px-6 py-3">
                             No.
@@ -139,7 +188,7 @@
                                     default => 'bg-gray-300',
                                 };
                             @endphp
-                            <tr class="bg-white border-b border-gray-200 hover:bg-gray-100">
+                            <tr class="bg-white border-b border-gray-200 hover:bg-gray-100 sm:text-left text-center">
                                 <th scope="row" class="px-6 py-4 font-medium text-center">
                                     {{ $assignees->firstItem() + $index }}
                                 </th>
@@ -166,35 +215,37 @@
                                     </span>
                                 </td>
                                 <td class="px-6 py-4">
-                                    {{ $assignee->cas_pickup_time->format('d M Y, H:i') }} WIB
+                                    {{ $assignee->cas_pickup_time->translatedFormat('d M Y, H:i') }} WIB
                                 </td>
                                 <td class="px-6 py-4">
-                                    {{ $assignee->cas_arrived_time ? $assignee->cas_arrived_time->format('d M Y, H:i') . ' WIB' : '-' }}
+                                    {{ $assignee->cas_arrived_time ? $assignee->cas_arrived_time->translatedFormat('d M Y, H:i') . ' WIB' : '-' }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    {{ $assignee->cas_start_time ? $assignee->cas_start_time->format('d M Y, H:i') . ' WIB' : '-' }}
+                                    {{ $assignee->cas_start_time ? $assignee->cas_start_time->translatedFormat('d M Y, H:i') . ' WIB' : '-' }}
 
                                 </td>
                                 <td class="px-6 py-4">
-                                    {{ $assignee->cas_finish_time ? $assignee->cas_finish_time->format('d M Y, H:i') . ' WIB' : '-' }}
-
+                                    {{ $assignee->cas_finish_time ? $assignee->cas_finish_time->translatedFormat('d M Y, H:i') . ' WIB' : '-' }}
                                 </td>
-                                <td class="px-6 py-4 relative text-center">
-                                    <button
-                                        class="menu-btn text-white  cursor-pointer font-semibold bg-[#344357] px-3 p-2 rounded-md">
-                                        &#x22EE;
-                                    </button>
-                                    <div
-                                        class="menu-popup fixed right-[110px] sm:right-32 hidden mt-2 w-32 bg-white shadow-lg rounded-md z-50 p-2 text-nowrap">
-                                        <a href="{{ route('admin.assignees.show', $assignee->cas_ID) }}"
-                                            class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md">Lihat
-                                            Detail</a>
-                                        <a href="{{ route('admin.assignees.edit', $assignee->cas_ID) }}"
-                                            class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md">Edit
-                                            Data</a>
-                                        <button type="button" data-url="/admin/assignees/{{ $assignee->cas_ID }}"
-                                            class="{{ Auth::user()->user_role !== 'kurir' ? '' : 'hidden' }} btn-hapus block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md cursor-pointer">Hapus
-                                            Data</button>
+                                <td class="px-6 py-4 flex justify-center">
+                                    <div class="relative w-fit h-fit">
+                                        <button
+                                            class="menu-btn text-white  cursor-pointer font-semibold bg-[#344357] px-3 p-2 rounded-md hover:bg-[#242e3b] active:bg-[#242e3b] focus:bg-[#242e3b] active:scale-90">
+                                            &#x22EE;
+                                        </button>
+
+                                        <div
+                                            class="menu-popup absolute {{ $assignees->firstItem() + $index == $assignees->lastItem() ? 'bottom-0' : '-top-[10px]' }} -left-[140px] hidden sm:right-36 w-32 bg-white shadow-lg rounded-md z-50 p-2 text-nowrap text-center">
+                                            <a href="{{ route('admin.assignees.show', $assignee->cas_ID) }}"
+                                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-gray-100 focus:bg-gray-100 rounded-md">Lihat
+                                                Detail</a>
+                                            <a href="{{ route('admin.assignees.edit', $assignee->cas_ID) }}"
+                                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-gray-100 focus:bg-gray-100 rounded-md">Edit
+                                                Data</a>
+                                            <button type="button" data-url="/admin/assignees/{{ $assignee->cas_ID }}"
+                                                class="{{ Auth::user()->user_role !== 'kurir' ? '' : 'hidden' }} btn-hapus block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-gray-100 focus:bg-gray-100 rounded-md cursor-pointer">Hapus
+                                                Data</button>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>

@@ -104,7 +104,7 @@ class PriceController extends Controller
     {
         try {
 
-            // Hapus data dari database
+            $price = Price::with('locations.pasarJayaShipments', 'locations.pasarJayaBills')->findOrFail($price->spl_ID);
             $price->delete();
 
             Session::flash('success', 'Data tarif berhasil dihapus');
@@ -129,40 +129,40 @@ class PriceController extends Controller
             'spl_type.in'           => 'Jenis tarif harus berdasarkan opsi yang ada.',
 
             'spl_baseprice.required'        => 'Tarif dasar internal wajib diisi.',
-            'spl_baseprice.integer'         => 'Tarif dasar internal harus berupa angka.',
-            'spl_baseprice.min'             => 'Tarif dasar internal tidak boleh negatif.',
+            'spl_baseprice.integer'         => 'Tarif dasar internal harus berupa nominal.',
+            'spl_baseprice.digits_between'             => 'Tarif dasar internal min 1 dan maks 10 digit',
 
             'spl_baseprice_client.required' => 'Tarif dasar klien wajib diisi.',
-            'spl_baseprice_client.integer'  => 'Tarif dasar klien harus berupa angka.',
-            'spl_baseprice_client.min'      => 'Tarif dasar klien tidak boleh negatif.',
+            'spl_baseprice_client.integer'  => 'Tarif dasar klien harus berupa nominal.',
+            'spl_baseprice_client.digits_between'      => 'Tarif dasar klien min 1 dan maks 10 digit',
 
             'spl_multidrop.required'        => 'Tarif multidrop internal wajib diisi.',
-            'spl_multidrop.integer'         => 'Tarif multidrop internal harus berupa angka.',
-            'spl_multidrop.min'             => 'Tarif multidrop internal tidak boleh negatif.',
+            'spl_multidrop.integer'         => 'Tarif multidrop internal harus berupa nominal.',
+            'spl_multidrop.digits_between'             => 'Tarif multidrop internal min 1 dan maks 10 digit',
 
             'spl_multidrop_client.required' => 'Tarif multidrop klien wajib diisi.',
-            'spl_multidrop_client.integer'  => 'Tarif multidrop klien harus berupa angka.',
-            'spl_multidrop_client.min'      => 'Tarif multidrop klien tidak boleh negatif.',
+            'spl_multidrop_client.integer'  => 'Tarif multidrop klien harus berupa nominal.',
+            'spl_multidrop_client.digits_between'      => 'Tarif multidrop klien min 1 dan maks 10 digit',
 
             'spl_roundtrip.required'        => 'Tarif roundtrip internal wajib diisi.',
-            'spl_roundtrip.integer'         => 'Tarif roundtrip internal harus berupa angka.',
-            'spl_roundtrip.min'             => 'Tarif roundtrip internal tidak boleh negatif.',
+            'spl_roundtrip.integer'         => 'Tarif roundtrip internal harus berupa nominal.',
+            'spl_roundtrip.digits_between'             => 'Tarif roundtrip internal min 1 dan maks 10 digit',
 
             'spl_roundtrip_client.required' => 'Tarif roundtrip klien wajib diisi.',
-            'spl_roundtrip_client.integer'  => 'Tarif roundtrip klien harus berupa angka.',
-            'spl_roundtrip_client.min'      => 'Tarif roundtrip klien tidak boleh negatif.',
+            'spl_roundtrip_client.integer'  => 'Tarif roundtrip klien harus berupa nominal.',
+            'spl_roundtrip_client.digits_between'      => 'Tarif roundtrip klien min 1 dan maks 10 digit',
         ];
 
 
         $validationFormat = [
             'spl_name'               => 'required|string|max:100|unique:shipment_price_lists,spl_name|regex:/^[a-zA-Z0-9\s\-]+$/',
             'spl_type'               => 'required|in:pasjay,paxel',
-            'spl_baseprice'          => 'required|integer|min:0',
-            'spl_baseprice_client'   => 'required|integer|min:0',
-            'spl_multidrop'          => 'required|integer|min:0',
-            'spl_multidrop_client'   => 'required|integer|min:0',
-            'spl_roundtrip'          => 'required|integer|min:0',
-            'spl_roundtrip_client'   => 'required|integer|min:0',
+            'spl_baseprice'          => 'required|integer|digits_between:1,10',
+            'spl_baseprice_client'   => 'required|integer|digits_between:1,10',
+            'spl_multidrop'          => 'required|integer|digits_between:1,10',
+            'spl_multidrop_client'   => 'required|integer|digits_between:1,10',
+            'spl_roundtrip'          => 'required|integer|digits_between:1,10',
+            'spl_roundtrip_client'   => 'required|integer|digits_between:1,10',
         ];
 
 

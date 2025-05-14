@@ -10,4 +10,9 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    // server: {
+    //     host: "192.168.1.48", // <- agar bisa diakses dari jaringan lain
+    //     port: 5173, // <- default port vite
+    //     strictPort: true,
+    // },
 });

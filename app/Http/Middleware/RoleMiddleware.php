@@ -28,9 +28,9 @@ class RoleMiddleware
                 case 'admin':
                     return redirect()->route('admin.shippings.index');
                 case 'korlap':
-                    return redirect()->route('admin.couriers.index');
+                    return redirect()->route('admin.assignees.index');
                 case 'kurir':
-                    return redirect()->route('admin.locations.index');
+                    return redirect()->route('admin.assignees.index');
                 default:
                     Auth::logout();
                     abort(403, 'Unauthorized role.');

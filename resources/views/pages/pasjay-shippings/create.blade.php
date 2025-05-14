@@ -121,7 +121,7 @@
                             @foreach ($locations as $location)
                                 <option value="{{ $location->shploc_ID }}"
                                     {{ old('shploc_ID') == $location->shploc_ID ? 'selected' : '' }}>
-                                    {{ $location->shploc_name }}
+                                    {{ $location->shploc_name . ' - (' . $location->price->spl_name . ')' }}
                                 </option>
                             @endforeach
                         </select>

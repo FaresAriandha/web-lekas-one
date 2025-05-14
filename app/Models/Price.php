@@ -39,8 +39,10 @@ class Price extends Model
     {
         static::deleting(function ($price) {
             if (!$price->isForceDeleting()) {
-                // 1. Soft delete relasi locations
-                $price->locations()->delete();
+                // Soft delete locations (trigger event di Location)
+                foreach ($price->locations as $location) {
+                    $location->delete(); // ini akan trigger booted() di Location
+                }
             }
         });
 
